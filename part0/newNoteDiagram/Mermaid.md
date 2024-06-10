@@ -25,7 +25,7 @@ sequenceDiagram
     that adds the new note to an unordered list
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate servere
+    activate server
     server->>browser: json file with the added note
 
 ```
