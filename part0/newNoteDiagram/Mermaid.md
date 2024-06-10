@@ -6,9 +6,10 @@ sequenceDiagram
     participant server
 
     browser->>server: POST new note to https://studies.cs.helsinki.fi/exampleapp/notes
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
-    server->>browser HTML document
+    server->>browser: HTML document
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
@@ -18,14 +19,11 @@ sequenceDiagram
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
     activate server
-    server->>browser JavaScript file
+    server->>browser: JavaScript file
     deactivate server
 
-    Note right of browser: The browser starts executing the JavaScript code
-    that adds the new note to an unordered list
-
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-    activate servere
+    activate server
     server->>browser: json file with the added note
 
 ```
