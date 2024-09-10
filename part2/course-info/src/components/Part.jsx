@@ -9,22 +9,23 @@ const Part = ({ courses }) => {
   //   )
   // })
 
-  const both = []
+  //Not proud of this solution
 
+  const both = []
   const loopArray = () => {
     for (let i = 0; i < courses.length; i++) {
       let total = 0
-      both.push(<h2 key={courses[i].id}> {courses[i].name} </h2>)
+      both.push(<h2 key={courses[i].name}> {courses[i].name} </h2>)
       for (let j = 0; j < courses[i].parts.length; j++) {
         total += courses[i].parts[j].exercises
         both.push(
-        <p key={courses[i].parts[j].id}>
+        <p key={courses[i].parts[j].name}>
           {courses[i].parts[j].name} {" "}
           {courses[i].parts[j].exercises}
         </p>)
         if (j == courses[i].parts.length -1) {    
           both.push(
-            <p>
+            <p key={total}>
               <b> Total of {total} exercises </b>
             </p>)
         }
