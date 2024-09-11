@@ -1,3 +1,5 @@
+import noteService from "../services/noteService"
+
 const AddEntries = ({
   persons, newName, newNumber,
   setPersons, setNewName, setNewNumber,
@@ -12,9 +14,19 @@ const AddEntries = ({
     if (persons.find(person => nameObject.number === person.number)) {
       return alert(`${newName} ${newNumber} is already added to phonebook`)
     }
-    setPersons(persons.concat(nameObject))
-    setNewName("")
-    setNewNumber("")
+
+    noteService
+      .create(nameObject)
+      .then(returnedNote => {
+        setPersons(persons.concat(returnedNote))
+        setNewName("")
+        setNewNumber("")
+      })
+      .catch(error => {
+        alert(
+          "failed to create new person"
+        )
+      })
   }
 
   return (
