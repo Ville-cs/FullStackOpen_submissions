@@ -12,7 +12,15 @@ const AddEntries = ({
         number: newNumber
       }
     if (persons.find(person => nameObject.number === person.number)) {
-      return alert(`${newName} ${newNumber} is already added to phonebook`)
+      if (window.confirm(`${newNumber} already added: continue`)) {
+        const oldPerson = persons.find(person => nameObject.number === person.number)
+        noteService
+          .update(oldPerson.id, nameObject)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== oldPerson.id ? person : returnedPerson))
+          })
+          return
+      } else {return}
     }
 
     noteService

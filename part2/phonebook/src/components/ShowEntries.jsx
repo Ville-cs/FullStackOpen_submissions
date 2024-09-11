@@ -6,17 +6,18 @@ const ShowEntries = ({ newSearch, persons, setPersons }) => {
   : persons.filter(person =>
     person.name.toLowerCase().includes(newSearch.toLowerCase()))
 
-const handleDelete = (id) => {
-  window.confirm("Delete this number?")
-  noteService
-    .remove(id)
-    .then(
-      console.log("Deleted entry"),
-      setPersons(persons.filter(person => person.id !== id))
-    )
-    .catch(error =>
-      console.log("Error while deleting")
-    )
+  const handleDelete = (id) => {
+    if (window.confirm("Delete this number?")) {
+      noteService
+        .remove(id)
+        .then(
+          console.log("Deleted entry"),
+          setPersons(persons.filter(person => person.id !== id))
+        )
+        .catch(error =>
+          console.log("Error while deleting")
+        )
+    }
   }
 
   return (
