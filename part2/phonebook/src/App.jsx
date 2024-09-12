@@ -3,40 +3,50 @@ import SearchFilter from './components/SearchFilter'
 import ShowEntries from './components/ShowEntries'
 import AddEntries from './components/AddEntries'
 import noteService from './services/noteService'
+import SuccessfulAdd from './components/SuccessfulAdd'
+import ErrorMessage from './components/ErrorMessage'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState([])
   const [newNumber, setNewNumber] = useState([])
   const [newSearch, setNewSearch] = useState("")
+  const [addMessage, setAddMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
-    console.log('effect')
     noteService
       .getAll()
-      .then(initialNotes => {
-        setPersons(initialNotes)
+      .then(initialPersons => {
+        setPersons(initialPersons)
     })
     }, [])
 
   const handleName = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumber = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
   const handleSearch = (event) => {
-    console.log(event.target.value)
     setNewSearch(event.target.value)
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <div style={{margin: "10px 5px"}}>
+        <SuccessfulAdd
+          addMessage={addMessage}
+          setAddMessage={setAddMessage}
+        />
+        <ErrorMessage
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+        />
+      </div>
       <div>
         <SearchFilter
           newSearch={newSearch}
@@ -54,6 +64,8 @@ const App = () => {
         setNewNumber={setNewNumber}
         handleName={handleName}
         handleNumber={handleNumber}
+        setAddMessage={setAddMessage}
+        setErrorMessage={setErrorMessage}
       />
       <h2>Numbers</h2>
       <ShowEntries

@@ -3,7 +3,8 @@ import noteService from "../services/noteService"
 const AddEntries = ({
   persons, newName, newNumber,
   setPersons, setNewName, setNewNumber,
-  handleName, handleNumber
+  handleName, handleNumber, setAddMessage,
+  setErrorMessage
   }) => {
   const addNote = (event) => {
     event.preventDefault()
@@ -18,15 +19,22 @@ const AddEntries = ({
           .update(oldPerson.id, nameObject)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== oldPerson.id ? person : returnedPerson))
+            setNewName("")
+            setNewNumber("")
           })
+          .catch(error => {
+            setErrorMessage(`${newName} no longer exists`)
+          }
+          )
           return
       } else {return}
     }
 
     noteService
       .create(nameObject)
-      .then(returnedNote => {
-        setPersons(persons.concat(returnedNote))
+      .then(returnedPerson => {
+        setAddMessage(`Added ${newName}`)
+        setPersons(persons.concat(returnedPerson))
         setNewName("")
         setNewNumber("")
       })
