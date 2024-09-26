@@ -39,9 +39,8 @@ const AddEntries = ({
         setNewNumber("")
       })
       .catch(error => {
-        alert(
-          "failed to create new person"
-        )
+        console.log(error.response.data.error)
+        setErrorMessage(error.response.data.error)
       })
   }
 

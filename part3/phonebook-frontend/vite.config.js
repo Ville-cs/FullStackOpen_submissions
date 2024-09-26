@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: "https://fsopen-part3-backend-2.onrender.com/api/persons",
+        target: "https://fsopen-part3-backend-2.onrender.com/api/people",
         changeOrigin: true,
       },
     }
