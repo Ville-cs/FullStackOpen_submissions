@@ -84,6 +84,35 @@ test('return 400 if no title or url', async () => {
     .expect('content-type', /application\/json/)
 })
 
+test('blogs can be deleted by id', async () => {
+  const blogs = await helper.blogsInDb()
+  const deleted = blogs[0]
+
+  await api.delete(`/api/blogs/${deleted.id}`).expect(204)
+  const blogsAfter = await helper.blogsInDb()
+
+  assert.strictEqual(blogsAfter.length, blogs.length - 1)
+
+  const titles = blogsAfter.map((blog) => blog.title)
+  assert(!titles.includes(deleted.title))
+})
+
+test('blogs can be updated by id', async () => {
+  const blogs = await helper.blogsInDb()
+  const toBeUpdated = blogs[0]
+  const updatedBlog = {
+    title: 'test update',
+    author: 'test update',
+    url: 'new url',
+    likes: 999,
+  }
+  await api
+    .put(`/api/blogs/${toBeUpdated.id}`)
+    .send(updatedBlog)
+    .set('content-type', 'application/json')
+    .expect(200)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
