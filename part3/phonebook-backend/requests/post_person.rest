@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/people
+content-type: application/json
+
+{
+  "name": "Virpa",
+  "number": "123-123456789"
+}
+
+###
+POST https://fsopen-phonebook-1cwl.onrender.com/api/persons/
+content-type: application/json
+
+{
+  "name": "Matti Meikäläinen",
+  "number": "12345"
+}
