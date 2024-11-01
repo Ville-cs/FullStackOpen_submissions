@@ -23,7 +23,7 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
     blog.likes = 0
   }
   if (!blog.title || !blog.url) {
-    res.status(400).send(blog)
+    return res.status(400).send(blog)
   }
 
   const savedBlog = await blog.save()
