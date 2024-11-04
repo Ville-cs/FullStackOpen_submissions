@@ -6,6 +6,7 @@ import UserInfo from './components/UserInfo'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -27,30 +28,6 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs => setBlogs(blogs))
   }, [])
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -88,7 +65,16 @@ const App = () => {
       <div>
         <h2>Login to see blogs</h2>
         <Notification errorMessage={errorMessage} message={message} />
-        {loginForm()}
+        {/* {loginForm()} */}
+        <Togglable buttonLabel="Log in here">
+          <LoginForm
+            handleLogin={handleLogin}
+            username={username}
+            password={password}
+            setUsername={setUsername}
+            setPassword={setPassword}
+          />
+        </Togglable>
       </div>
     )
   }
@@ -99,7 +85,7 @@ const App = () => {
       <Notification errorMessage={errorMessage} message={message} />
       <UserInfo userDetails={user} handleClick={handleLogout} />
       <h2>Create a new blog</h2>
-      <Togglable buttonLabel="new note">
+      <Togglable buttonLabel="Post a new blog here!">
         <BlogForm setMessage={setMessage} setErrorMessage={setErrorMessage} />
       </Togglable>
       {blogs.map(blog => (
