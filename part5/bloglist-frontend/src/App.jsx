@@ -3,8 +3,9 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import UserInfo from './components/UserInfo'
-import NewBlog from './components/NewBlog'
+import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,10 +14,6 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-  const [formVisible, setFormVisible] = useState(false)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -55,31 +52,6 @@ const App = () => {
     </form>
   )
 
-  const newForm = () => {
-    const hideWhenVisible = { display: formVisible ? 'none' : '' }
-    const showWhenVisible = { display: formVisible ? '' : 'none' }
-
-    return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setFormVisible(true)}>Post a new blog!</button>
-        </div>
-        <div style={showWhenVisible}>
-          <NewBlog
-            title={title}
-            author={author}
-            url={url}
-            handleTitleChange={({ target }) => setTitle(target.value)}
-            handleAuthorChange={({ target }) => setAuthor(target.value)}
-            handleUrlChange={({ target }) => setUrl(target.value)}
-            handleSubmit={handleSubmit}
-          />
-          <button onClick={() => setFormVisible(false)}>hide</button>
-        </div>
-      </div>
-    )
-  }
-
   const handleLogin = async event => {
     event.preventDefault()
 
@@ -111,32 +83,6 @@ const App = () => {
     setUser(null)
   }
 
-  const handleSubmit = async event => {
-    event.preventDefault()
-
-    try {
-      const myBlog = {
-        title: title,
-        author: author,
-        url: url,
-      }
-      await blogService.create(myBlog)
-      setBlogs(blogs.concat(myBlog))
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-      setMessage('Blog submitted!')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
-    } catch (error) {
-      setErrorMessage('Some fields missing')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
-  }
-
   if (!user) {
     return (
       <div>
@@ -153,7 +99,9 @@ const App = () => {
       <Notification errorMessage={errorMessage} message={message} />
       <UserInfo userDetails={user} handleClick={handleLogout} />
       <h2>Create a new blog</h2>
-      {newForm()}
+      <Togglable buttonLabel="new note">
+        <BlogForm setMessage={setMessage} setErrorMessage={setErrorMessage} />
+      </Togglable>
       {blogs.map(blog => (
         <Blog key={blog.id} blog={blog} />
       ))}
