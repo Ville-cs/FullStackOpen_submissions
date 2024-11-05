@@ -15,6 +15,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [renderBlog, setRenderBlog] = useState(false)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -26,8 +27,11 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    blogService.getAll().then(blogs => setBlogs(blogs))
-  }, [])
+    blogService.getAll().then(blogs => {
+      blogs.sort((a, b) => b.likes - a.likes)
+      setBlogs(blogs)
+    })
+  }, [renderBlog])
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -60,7 +64,44 @@ const App = () => {
     setUser(null)
   }
 
-  blogs.sort((a, b) => b.likes - a.likes)
+  const handleBlogPost = async object => {
+    try {
+      const postedBlog = await blogService.create(object)
+      setBlogs(blogs.concat(postedBlog))
+      setRenderBlog(!renderBlog)
+      setMessage('Blog submitted!')
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    } catch (error) {
+      console.log(error)
+      setErrorMessage('Some fields missing')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const deleteBlog = async blog => {
+    window.confirm(`Remove blog: ${blog.title} by ${blog.author}`)
+    await blogService.remove(blog.id)
+    setRenderBlog(!renderBlog)
+    setMessage('Blog deleted!')
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+  }
+
+  const addLike = async (blog, blogObject) => {
+    await blogService.update(blog.id, blogObject)
+    setRenderBlog(!renderBlog)
+    setMessage('Liked blog!')
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+    // const toUpdate = blogs.find(b => b.id === blog.id)
+    // toUpdate.likes += 1
+  }
 
   if (!user) {
     return (
@@ -79,7 +120,7 @@ const App = () => {
       </div>
     )
   }
-  console.log(blogs)
+
   return (
     <div>
       <h2>Blogs</h2>
@@ -92,10 +133,19 @@ const App = () => {
           setErrorMessage={setErrorMessage}
           blogs={blogs}
           setBlogs={setBlogs}
+          renderBlog={renderBlog}
+          setRenderBlog={setRenderBlog}
+          handleBlogPost={handleBlogPost}
         />
       </Togglable>
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} blogs={blogs} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          user={user}
+          deleteBlog={deleteBlog}
+          addLike={addLike}
+        />
       ))}
     </div>
   )
