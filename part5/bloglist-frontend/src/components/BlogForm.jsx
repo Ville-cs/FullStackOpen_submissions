@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
 
-const BlogForm = ({ setMessage, setErrorMessage }) => {
+const BlogForm = ({ setMessage, setErrorMessage, blogs, setBlogs }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -13,6 +14,7 @@ const BlogForm = ({ setMessage, setErrorMessage }) => {
         title: title,
         author: author,
         url: url,
+        likes: 0,
       }
       await blogService.create(myBlog)
       setBlogs(blogs.concat(myBlog))
@@ -24,6 +26,7 @@ const BlogForm = ({ setMessage, setErrorMessage }) => {
         setMessage(null)
       }, 5000)
     } catch (error) {
+      console.log(error)
       setErrorMessage('Some fields missing')
       setTimeout(() => {
         setErrorMessage(null)

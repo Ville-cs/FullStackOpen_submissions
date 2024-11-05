@@ -60,6 +60,8 @@ const App = () => {
     setUser(null)
   }
 
+  blogs.sort((a, b) => b.likes - a.likes)
+
   if (!user) {
     return (
       <div>
@@ -85,10 +87,15 @@ const App = () => {
       <UserInfo userDetails={user} handleClick={handleLogout} />
       <h2>Create a new blog</h2>
       <Togglable buttonLabel="Post a new blog here!">
-        <BlogForm setMessage={setMessage} setErrorMessage={setErrorMessage} />
+        <BlogForm
+          setMessage={setMessage}
+          setErrorMessage={setErrorMessage}
+          blogs={blogs}
+          setBlogs={setBlogs}
+        />
       </Togglable>
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} blogs={blogs} />
       ))}
     </div>
   )
