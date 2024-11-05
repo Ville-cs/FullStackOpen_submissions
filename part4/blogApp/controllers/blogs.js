@@ -11,6 +11,11 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
   const body = req.body
   const user = req.user
 
+  console.log(body.likes)
+  if (body.likes === null) {
+    body.likes = 0
+  }
+
   const blog = new Blog({
     title: body.title,
     author: body.author,
@@ -19,9 +24,6 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
     user: user.id,
   })
 
-  if (blog.likes === null) {
-    blog.likes = 0
-  }
   if (!blog.title || !blog.url) {
     return res.status(400).send(blog)
   }
