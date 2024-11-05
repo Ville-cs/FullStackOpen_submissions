@@ -65,7 +65,6 @@ const App = () => {
       <div>
         <h2>Login to see blogs</h2>
         <Notification errorMessage={errorMessage} message={message} />
-        {/* {loginForm()} */}
         <Togglable buttonLabel="Log in here">
           <LoginForm
             handleLogin={handleLogin}
@@ -78,7 +77,7 @@ const App = () => {
       </div>
     )
   }
-
+  console.log(blogs)
   return (
     <div>
       <h2>Blogs</h2>
