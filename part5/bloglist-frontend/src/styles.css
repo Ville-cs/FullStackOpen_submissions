@@ -1,0 +1,34 @@
+.removeStyle {
+  color: #fff;
+  background-color: #eb2b00;
+}
+
+.likeStyle {
+  color: white;
+  background-color: green;
+}
+
+.detailsStyle {
+  color: white;
+  background-color: blue;
+}
+
+.errorStyle {
+  color: red;
+  font-size: 25;
+  background-color: lightgrey;
+  max-width: 500px;
+  border-style: solid;
+  border-color: red;
+  padding: 5px 10px;
+}
+
+.messageStyle {
+  color: green;
+  font-size: 25;
+  background-color: white;
+  max-width: 500px;
+  border-style: solid;
+  border-radius: 5;
+  padding: 5px 10px;
+}

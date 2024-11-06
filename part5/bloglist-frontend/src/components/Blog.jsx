@@ -14,14 +14,6 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
   const handleClick = () => {
     setSeeDetails(!seeDetails)
   }
-  if (!seeDetails) {
-    return (
-      <div>
-        {blog.title}
-        <button onClick={handleClick}> show details </button>
-      </div>
-    )
-  }
 
   const handleLike = () => {
     const blogObject = {
@@ -34,21 +26,43 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
   }
 
   const handleRemove = () => {
-    deleteBlog(blog)
+    if (window.confirm(`Remove blog: ${blog.title} by ${blog.author}`)) {
+      deleteBlog(blog)
+    }
+  }
+
+  if (!seeDetails) {
+    return (
+      <div>
+        {blog.title}
+        <button className="detailsStyle" onClick={handleClick}>
+          {' '}
+          show details{' '}
+        </button>
+      </div>
+    )
   }
 
   return (
     <div style={blogStyle}>
-      <div>{blog.title}</div>
+      <div>
+        {blog.title}
+        <button className="detailsStyle" onClick={handleClick}>
+          hide
+        </button>
+      </div>
       <div> Read the article here {blog.url}</div>
       <div>
         Likes {blog.likes}
-        <button onClick={handleLike}> like </button>
+        <button className="likeStyle" onClick={handleLike}>
+          like
+        </button>
       </div>
       <div> By {blog.author}</div>
-      <button onClick={handleClick}> hide </button>
       {user.id === blog.user.id ? (
-        <button onClick={handleRemove}> remove </button>
+        <button className="removeStyle" onClick={handleRemove}>
+          remove
+        </button>
       ) : null}
     </div>
   )
