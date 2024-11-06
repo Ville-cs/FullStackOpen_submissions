@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -7,6 +7,7 @@ import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
+import './styles.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -16,6 +17,8 @@ const App = () => {
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [renderBlog, setRenderBlog] = useState(false)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -69,12 +72,13 @@ const App = () => {
       const postedBlog = await blogService.create(object)
       setBlogs(blogs.concat(postedBlog))
       setRenderBlog(!renderBlog)
+      blogFormRef.current.toggleVisibility()
       setMessage('Blog submitted!')
       setTimeout(() => {
         setMessage(null)
       }, 5000)
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
       setErrorMessage('Some fields missing')
       setTimeout(() => {
         setErrorMessage(null)
@@ -83,7 +87,6 @@ const App = () => {
   }
 
   const deleteBlog = async blog => {
-    window.confirm(`Remove blog: ${blog.title} by ${blog.author}`)
     await blogService.remove(blog.id)
     setRenderBlog(!renderBlog)
     setMessage('Blog deleted!')
@@ -99,8 +102,6 @@ const App = () => {
     setTimeout(() => {
       setMessage(null)
     }, 5000)
-    // const toUpdate = blogs.find(b => b.id === blog.id)
-    // toUpdate.likes += 1
   }
 
   if (!user) {
@@ -126,18 +127,12 @@ const App = () => {
       <h2>Blogs</h2>
       <Notification errorMessage={errorMessage} message={message} />
       <UserInfo userDetails={user} handleClick={handleLogout} />
+
       <h2>Create a new blog</h2>
-      <Togglable buttonLabel="Post a new blog here!">
-        <BlogForm
-          setMessage={setMessage}
-          setErrorMessage={setErrorMessage}
-          blogs={blogs}
-          setBlogs={setBlogs}
-          renderBlog={renderBlog}
-          setRenderBlog={setRenderBlog}
-          handleBlogPost={handleBlogPost}
-        />
+      <Togglable buttonLabel="Post a new blog here!" ref={blogFormRef}>
+        <BlogForm handleBlogPost={handleBlogPost} />
       </Togglable>
+
       {blogs.map(blog => (
         <Blog
           key={blog.id}
