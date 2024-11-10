@@ -25,11 +25,10 @@ const Blog = ({ blog, addLike, user, deleteBlog }) => {
 
   if (!seeDetails) {
     return (
-      <div>
-        {blog.title}
+      <div className="blog">
+        {blog.title} by {blog.author}
         <button className="detailsStyle" onClick={handleClick}>
-          {' '}
-          show details{' '}
+          show details
         </button>
       </div>
     )
