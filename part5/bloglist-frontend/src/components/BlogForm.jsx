@@ -23,7 +23,6 @@ const BlogForm = ({ handleBlogPost }) => {
       title: title,
       author: author,
       url: url,
-      likes: 0,
     })
     setTitle('')
     setAuthor('')
@@ -40,6 +39,7 @@ const BlogForm = ({ handleBlogPost }) => {
           name="title"
           onChange={handleTitleChange}
           placeholder="title of the blog"
+          id="title"
         />
       </div>
       <div>
@@ -50,6 +50,7 @@ const BlogForm = ({ handleBlogPost }) => {
           name="author"
           onChange={handleAuthorChange}
           placeholder="author of the blog"
+          id="author"
         />
       </div>
       <div>
@@ -60,6 +61,7 @@ const BlogForm = ({ handleBlogPost }) => {
           name="url"
           onChange={handleUrlChange}
           placeholder="URL of the blog"
+          id="url"
         />
       </div>
       <button className="postBlog" type="submit">
