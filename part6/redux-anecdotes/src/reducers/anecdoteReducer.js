@@ -19,7 +19,7 @@ const asObject = anecdote => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state, action) => {
+const anecdoteReducer = (state, action) => {
   if (!state) {
     state = initialState
   }
@@ -64,4 +64,4 @@ export const addAnecdote = anecdote => {
   }
 }
 
-export default reducer
+export default anecdoteReducer
