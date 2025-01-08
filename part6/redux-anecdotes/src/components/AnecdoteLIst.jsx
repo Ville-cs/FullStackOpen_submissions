@@ -3,11 +3,10 @@ import { addLike } from '../reducers/anecdoteReducer'
 
 const AnecdoteLIst = () => {
   const anecdotes = useSelector(state => {
-    console.log(state)
     if (!state.filter) {
-      return state.notes
+      return state.anecdotes
     }
-    return state.notes.filter(x =>
+    return state.anecdotes.filter(x =>
       x.content.toLowerCase().includes(state.filter.toLowerCase())
     )
   })
@@ -17,14 +16,15 @@ const AnecdoteLIst = () => {
     dispatch(addLike(id))
   }
 
+  const sortedAnecdotes = [...anecdotes]
   const sortAnecdotes = () => {
-    anecdotes.toSorted((a, b) => b.votes - a.votes)
+    sortedAnecdotes.sort((a, b) => b.votes - a.votes)
   }
   sortAnecdotes()
 
   return (
     <div>
-      {anecdotes.map(anecdote => (
+      {sortedAnecdotes.map(anecdote => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
