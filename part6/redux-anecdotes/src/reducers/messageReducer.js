@@ -6,7 +6,7 @@ const messageSlice = createSlice({
   name: 'message',
   initialState,
   reducers: {
-    createMessage(state, action) {
+    setMessage(state, action) {
       return action.payload
     },
     deleteMessage(state, action) {
@@ -16,5 +16,15 @@ const messageSlice = createSlice({
   },
 })
 
-export const { createMessage, deleteMessage } = messageSlice.actions
+export const { setMessage, deleteMessage } = messageSlice.actions
+
+export const createMessage = (message, timer) => {
+  return async dispatch => {
+    dispatch(setMessage(message))
+    setTimeout(() => {
+      dispatch(deleteMessage())
+    }, timer * 1000)
+  }
+}
+
 export default messageSlice.reducer
