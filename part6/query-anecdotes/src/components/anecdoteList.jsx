@@ -1,8 +1,11 @@
 import { updateAnecdote } from '../requests'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
+import { useNotificationDispatch } from '../NotificationContext'
 
 const AnecdoteList = ({ anecdotes }) => {
+  const dispatch = useNotificationDispatch()
+
   const queryClient = useQueryClient()
   const updateAnecdoteMutation = useMutation({
     mutationFn: updateAnecdote,
@@ -12,6 +15,7 @@ const AnecdoteList = ({ anecdotes }) => {
         ['myAnecdotes'],
         anecdotes.map(n => (n.id === data.id ? data : n))
       )
+      dispatch({ type: 'VOTE', payload: data.content })
     },
   })
 
