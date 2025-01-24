@@ -176,12 +176,14 @@ describe('tests for blogs', () => {
   test('blogs can be updated by id', async () => {
     const blogs = await helper.blogsInDb()
     const toBeUpdated = blogs[0]
+
     const updatedBlog = {
       title: 'test update',
       author: 'test update',
       url: 'new url',
       likes: 999,
     }
+
     await api
       .put(`/api/blogs/${toBeUpdated.id}`)
       .send(updatedBlog)
