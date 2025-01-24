@@ -51,16 +51,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setMessage('Login successful')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch({ type: 'LOGIN', payload: user.username })
     } catch (error) {
-      console.log(error.message)
-      setErrorMessage('Username or password wrong')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      dispatch({ type: 'LOGIN_ERROR', payload: error.response.data.error })
     }
   }
 
@@ -75,36 +68,22 @@ const App = () => {
       setBlogs(blogs.concat(postedBlog))
       setRenderBlog(!renderBlog)
       blogFormRef.current.toggleVisibility()
-      setMessage('Blog submitted!')
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      dispatch({ type: 'POST', payload: postedBlog.title })
     } catch (error) {
-      console.log(error.message)
-      setErrorMessage('Some fields missing')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      dispatch({ type: 'POST_ERROR' })
     }
   }
 
   const deleteBlog = async blog => {
     await blogService.remove(blog.id)
     setRenderBlog(!renderBlog)
-    setMessage('Blog deleted!')
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
+    dispatch({ type: 'DELETE', payload: blog.title })
   }
 
   const addLike = async (blog, blogObject) => {
     const response = await blogService.update(blog.id, blogObject)
-    console.log(response)
     setRenderBlog(!renderBlog)
     dispatch({ type: 'LIKE', payload: response.title })
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
   }
 
   if (!user) {

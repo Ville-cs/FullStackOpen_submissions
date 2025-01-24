@@ -2,15 +2,38 @@ import { createContext, useReducer, useContext } from 'react'
 
 const notificationReducer = (state, action) => {
   switch (action.type) {
+    case 'LOGIN':
+      return {
+        style: 'success',
+        message: `logged into ${action.payload}`,
+      }
+    case 'LOGIN_ERROR':
+      return {
+        style: 'error',
+        message: action.payload,
+      }
     case 'POST':
-      return `You posted ${action.payload}`
+      return {
+        style: 'success',
+        message: `You posted ${action.payload}`,
+      }
     case 'LIKE':
-      return `You liked ${action.payload}`
-    case 'ERROR':
-      return 'Your post should be at least 5 characters long!'
+      return {
+        style: 'success',
+        message: `You liked ${action.payload}`,
+      }
+    case 'DELETE':
+      return {
+        style: 'success',
+        message: `You deleted ${action.payload}`,
+      }
+    case 'POST_ERROR':
+      return {
+        style: 'error',
+        message: 'Your post should a title and a url!',
+      }
     case 'ERASE':
-      state = ''
-      return state
+      return {}
     default:
       return state
   }
@@ -31,7 +54,7 @@ export const useNotificationDispatch = () => {
 export const NotificationContextProvider = props => {
   const [notification, notificationDispatch] = useReducer(
     notificationReducer,
-    ''
+    {}
   )
   return (
     <NotificationContext.Provider value={[notification, notificationDispatch]}>
