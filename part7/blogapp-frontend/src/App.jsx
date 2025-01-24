@@ -8,6 +8,7 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import './styles.css'
+import { useNotificationDispatch } from './NotificationContext'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -17,6 +18,7 @@ const App = () => {
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [renderBlog, setRenderBlog] = useState(false)
+  const dispatch = useNotificationDispatch()
 
   const blogFormRef = useRef()
 
@@ -96,9 +98,10 @@ const App = () => {
   }
 
   const addLike = async (blog, blogObject) => {
-    await blogService.update(blog.id, blogObject)
+    const response = await blogService.update(blog.id, blogObject)
+    console.log(response)
     setRenderBlog(!renderBlog)
-    setMessage('Liked blog!')
+    dispatch({ type: 'LIKE', payload: response.title })
     setTimeout(() => {
       setMessage(null)
     }, 5000)
