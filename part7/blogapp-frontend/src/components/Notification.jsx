@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import NotificationContext from '../NotificationContext'
+import NotificationContext from '../reducers/NotificationContext'
 
-const Notification = ({ errorMessage, message }) => {
+const Notification = () => {
   const [notification, dispatch] = useContext(NotificationContext)
 
   if (notification.style === 'error') {

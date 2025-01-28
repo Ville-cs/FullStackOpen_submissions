@@ -1,42 +1,34 @@
-import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
-import blogService from './services/blogs'
+import { useState, useEffect, useRef, useContext } from 'react'
 import loginService from './services/login'
-import UserInfo from './components/UserInfo'
-import BlogForm from './components/BlogForm'
+import userService from './services/users'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
+import Users from './components/Users'
+import User from './components/User'
+import Home from './components/Home'
+import Blog from './components/Blog'
+import NavBar from './components/NavBar'
+import { useNotificationDispatch } from './reducers/NotificationContext'
+import { useQuery } from '@tanstack/react-query'
+import blogService from './services/blogs'
+import UserContext from './reducers/UserContext'
+import { Routes, Route, Link, useMatch } from 'react-router-dom'
 import './styles.css'
-import { useNotificationDispatch } from './NotificationContext'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-  const [message, setMessage] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [renderBlog, setRenderBlog] = useState(false)
-  const dispatch = useNotificationDispatch()
-
-  const blogFormRef = useRef()
+  const dispatchNotification = useNotificationDispatch()
+  const [user, dispatchUser] = useContext(UserContext)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+      dispatchUser({ type: 'SETUSER', payload: user })
     }
-  }, [])
-
-  useEffect(() => {
-    blogService.getAll().then(blogs => {
-      blogs.sort((a, b) => b.likes - a.likes)
-      setBlogs(blogs)
-    })
-  }, [renderBlog])
+  }, [dispatchUser])
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -47,50 +39,55 @@ const App = () => {
         password,
       })
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      setUser(user)
       setUsername('')
       setPassword('')
-      dispatch({ type: 'LOGIN', payload: user.username })
+      dispatchUser({ type: 'LOGIN', payload: user })
+      dispatchNotification({ type: 'LOGIN', payload: user.username })
     } catch (error) {
-      dispatch({ type: 'LOGIN_ERROR', payload: error.response.data.error })
+      dispatchNotification({
+        type: 'LOGIN_ERROR',
+        payload: error.response.data.error,
+      })
     }
   }
 
-  const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser')
-    setUser(null)
+  const blogsResult = useQuery({
+    queryKey: ['myBlogs'],
+    queryFn: blogService.getAll,
+    retry: 1,
+    refetchOnWindowFocus: false,
+  })
+  const blogs = blogsResult.data
+
+  const matchBlog = useMatch('/blogs/:id')
+  let blog = null
+  if (blogs && matchBlog) {
+    blog = blogs.find(blog => blog.id === matchBlog.params.id)
   }
 
-  const handleBlogPost = async object => {
-    try {
-      const postedBlog = await blogService.create(object)
-      setBlogs(blogs.concat(postedBlog))
-      setRenderBlog(!renderBlog)
-      blogFormRef.current.toggleVisibility()
-      dispatch({ type: 'POST', payload: postedBlog.title })
-    } catch (error) {
-      dispatch({ type: 'POST_ERROR' })
-    }
+  const usersResult = useQuery({
+    queryKey: ['myUsers'],
+    queryFn: userService.getUsers,
+    retry: 1,
+    refetchOnWindowFocus: false,
+  })
+  const users = usersResult.data
+
+  const matchUser = useMatch('/users/:id')
+  let blogUser = null
+  if (users && matchUser) {
+    blogUser = users.find(user => user.id === matchUser.params.id)
   }
 
-  const deleteBlog = async blog => {
-    await blogService.remove(blog.id)
-    setRenderBlog(!renderBlog)
-    dispatch({ type: 'DELETE', payload: blog.title })
-  }
-
-  const addLike = async (blog, blogObject) => {
-    const response = await blogService.update(blog.id, blogObject)
-    setRenderBlog(!renderBlog)
-    dispatch({ type: 'LIKE', payload: response.title })
+  const padding = {
+    padding: 5,
   }
 
   if (!user) {
     return (
       <div>
         <h2>Login to see blogs</h2>
-        <Notification errorMessage={errorMessage} message={message} />
+        <Notification />
         <Togglable buttonLabel="Log in here">
           <LoginForm
             handleLogin={handleLogin}
@@ -107,22 +104,14 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
-      <Notification errorMessage={errorMessage} message={message} />
-      <UserInfo userDetails={user} handleClick={handleLogout} />
-
-      <h2>Create a new blog</h2>
-      <Togglable buttonLabel="Post a new blog here!" ref={blogFormRef}>
-        <BlogForm handleBlogPost={handleBlogPost} />
-      </Togglable>
-      {blogs.map(blog => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          user={user}
-          deleteBlog={deleteBlog}
-          addLike={addLike}
-        />
-      ))}
+      <Notification />
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<User blogUser={blogUser} />} />
+        <Route path="/blogs/:id" element={<Blog blog={blog} />} />
+      </Routes>
     </div>
   )
 }

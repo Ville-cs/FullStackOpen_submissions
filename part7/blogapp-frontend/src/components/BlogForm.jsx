@@ -1,43 +1,69 @@
 import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import blogService from '../services/blogs'
+import { useNotificationDispatch } from '../reducers/NotificationContext'
 
-const BlogForm = ({ handleBlogPost }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+const useField = type => {
+  const [value, setValue] = useState('')
 
-  const handleTitleChange = event => {
-    setTitle(event.target.value)
+  const onChange = event => {
+    setValue(event.target.value)
   }
 
-  const handleAuthorChange = event => {
-    setAuthor(event.target.value)
-  }
+  const onReset = () => setValue('')
 
-  const handleUrlChange = event => {
-    setUrl(event.target.value)
+  return {
+    type,
+    value,
+    onChange,
+    onReset,
   }
+}
+
+const BlogForm = ({ blogFormRef }) => {
+  const { onReset: resetTitle, ...title } = useField('text')
+  const { onReset: resetAuthor, ...author } = useField('text')
+  const { onReset: resetUrl, ...url } = useField('text')
+  const queryClient = useQueryClient()
+  const dispatch = useNotificationDispatch()
 
   const handleSubmit = async event => {
     event.preventDefault()
-    handleBlogPost({
-      title: title,
-      author: author,
-      url: url,
+    newBlogMutation.mutate({
+      title: title.value,
+      author: author.value,
+      url: url.value,
     })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    resetTitle(), resetAuthor(), resetUrl()
+    blogFormRef.current.toggleVisibility()
   }
+
+  const newBlogMutation = useMutation({
+    mutationFn: blogService.create,
+    onSuccess: newBlog => {
+      const blogs = queryClient.getQueryData(['myBlogs'])
+      queryClient.setQueryData(['myBlogs'], blogs.concat(newBlog))
+
+      //updates users blog entries too
+      const users = queryClient.getQueryData(['myUsers'])
+      queryClient.setQueryData(
+        ['myUsers'],
+        users.map(n =>
+          n.id === newBlog.user ? { ...n, blogs: n.blogs.concat(newBlog) } : n
+        )
+      )
+
+      dispatch({ type: 'POST', payload: newBlog.title })
+    },
+  })
 
   return (
     <form id="testForm" onSubmit={handleSubmit}>
       <div>
         title:
         <input
-          type="text"
-          value={title}
           name="title"
-          onChange={handleTitleChange}
+          {...title}
           placeholder="title of the blog"
           id="title"
         />
@@ -45,24 +71,15 @@ const BlogForm = ({ handleBlogPost }) => {
       <div>
         author:
         <input
-          type="text"
-          value={author}
           name="author"
-          onChange={handleAuthorChange}
+          {...author}
           placeholder="author of the blog"
           id="author"
         />
       </div>
       <div>
         url:
-        <input
-          type="text"
-          value={url}
-          name="url"
-          onChange={handleUrlChange}
-          placeholder="URL of the blog"
-          id="url"
-        />
+        <input name="url" {...url} placeholder="URL of the blog" id="url" />
       </div>
       <button className="postBlog" type="submit">
         Post

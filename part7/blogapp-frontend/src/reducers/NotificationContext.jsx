@@ -25,7 +25,7 @@ const notificationReducer = (state, action) => {
     case 'DELETE':
       return {
         style: 'success',
-        message: `You deleted ${action.payload}`,
+        message: `You deleted your post`,
       }
     case 'POST_ERROR':
       return {

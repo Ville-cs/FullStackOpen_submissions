@@ -1,57 +1,72 @@
-import { useState } from 'react'
+import '../styles.css'
+import blogService from '../services/blogs'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useNotificationDispatch } from '../reducers/NotificationContext'
+import { useUserValue } from '../reducers/UserContext'
+import { useNavigate } from 'react-router-dom'
 
-const Blog = ({ blog, addLike, user, deleteBlog }) => {
-  const [seeDetails, setSeeDetails] = useState(false)
+const Blog = ({ blog }) => {
+  const queryClient = useQueryClient()
+  const dispatch = useNotificationDispatch()
+  const user = useUserValue()
+  const navigate = useNavigate()
 
-  const handleClick = () => {
-    setSeeDetails(!seeDetails)
+  const handleRemove = blog => {
+    if (window.confirm(`Remove blog: ${blog.title} by ${blog.author}`)) {
+      deleteBlogMutation.mutate(blog.id)
+    }
   }
 
-  const handleLike = () => {
-    const blogObject = {
+  const deleteBlogMutation = useMutation({
+    mutationFn: blogService.remove,
+    onSuccess: () => {
+      const blogs = queryClient.getQueryData(['myBlogs'])
+      queryClient.invalidateQueries(['myBlogs'])
+      dispatch({ type: 'DELETE' })
+      navigate('/')
+    },
+  })
+
+  const updateBlogMutation = useMutation({
+    mutationFn: blogService.update,
+    onSuccess: blog => {
+      const blogs = queryClient.getQueryData(['myBlogs'])
+      queryClient.setQueryData(
+        ['myBlogs'],
+        blogs.map(n => (n.id === blog.id ? blog : n))
+      )
+      dispatch({ type: 'LIKE', payload: blog.title })
+    },
+  })
+
+  const handleLike = async blog => {
+    const newBlog = {
       title: blog.title,
       author: blog.author,
       url: blog.url,
       likes: blog.likes + 1,
+      id: blog.id,
     }
-    addLike(blog, blogObject)
+    updateBlogMutation.mutate(newBlog)
   }
 
-  const handleRemove = () => {
-    if (window.confirm(`Remove blog: ${blog.title} by ${blog.author}`)) {
-      deleteBlog(blog)
-    }
-  }
-
-  if (!seeDetails) {
-    return (
-      <div className="blog">
-        {blog.title} by {blog.author}
-        <button className="detailsStyle" onClick={handleClick}>
-          show details
-        </button>
-      </div>
-    )
-  }
+  if (!blog) return null
 
   return (
-    <div className="blogStyle">
-      <div>
-        {blog.title}
-        <button className="detailsStyle" onClick={handleClick}>
-          hide
-        </button>
-      </div>
-      <div> Read the article here {blog.url}</div>
+    <div>
+      <h2>
+        {blog.title} by {blog.author}
+      </h2>
+      <a href={blog.url}>{blog.url}</a>
       <div>
         Likes {blog.likes}
-        <button className="likeStyle" onClick={handleLike}>
+        <button className="likeStyle" onClick={() => handleLike(blog)}>
           like
         </button>
       </div>
-      <div> By {blog.author}</div>
-      {user.id === blog.user.id ? (
-        <button className="removeStyle" onClick={handleRemove}>
+      <div> Added by {blog.user.name}</div>
+      {user.id === blog.user.id || user.id === blog.user ? (
+        <button className="removeStyle" onClick={() => handleRemove(blog)}>
           remove
         </button>
       ) : null}
