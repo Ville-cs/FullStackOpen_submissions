@@ -1,5 +1,6 @@
 const logger = require('./logger')
 const User = require('../models/user')
+const Blog = require('../models/blog')
 const jwt = require('jsonwebtoken')
 
 const tokenExtractor = (req, res, next) => {
@@ -16,6 +17,16 @@ const userExtractor = async (req, res, next) => {
     return res.status(401).json({ error: 'token invalid' })
   }
   req.user = await User.findById(decodedToken.id)
+  next()
+}
+
+const blogExtractor = async (req, res, next) => {
+  console.log(req.body)
+  const id = req.body.blog
+  if (!id) {
+    return res.status(400).json({ error: 'no blog id in request' })
+  }
+  req.blog = await Blog.findById(id)
   next()
 }
 
@@ -49,4 +60,5 @@ module.exports = {
   errorHandler,
   tokenExtractor,
   userExtractor,
+  blogExtractor,
 }

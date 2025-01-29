@@ -1,11 +1,12 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const Comment = require('../models/comment')
-
 const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (req, res) => {
-  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
+  const blogs = await Blog.find({})
+    .populate('user', { username: 1, name: 1 })
+    .populate('comments', { content: 1 })
   res.json(blogs)
 })
 
@@ -38,25 +39,25 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
 
 blogsRouter.post(
   '/:id/comments',
+  middleware.blogExtractor,
   middleware.userExtractor,
   async (req, res) => {
     const body = req.body
     const user = req.user
-    // todo: blog extractor
-    // const blog = req.blog
+    const blog = req.blog
 
     if (!user) return res.status(401).json({ error: 'Login to post comments' })
 
     const comment = new Comment({
-      content: body.comment,
-      blog: body.blog,
+      content: body.content,
+      blog: req.params.id,
     })
 
-    // const savedComment = await comment.save()
-    // blog.comments = blog.comments.concat(savedComment.id)
-    // await blog.save()
+    const savedComment = await comment.save()
+    blog.comments = blog.comments.concat(savedComment.id)
+    await blog.save()
 
-    // res.status(201).json(savedComment)
+    res.status(201).json(savedComment)
   }
 )
 
