@@ -41,17 +41,18 @@ const BlogForm = ({ blogFormRef }) => {
   const newBlogMutation = useMutation({
     mutationFn: blogService.create,
     onSuccess: newBlog => {
-      const blogs = queryClient.getQueryData(['myBlogs'])
-      queryClient.setQueryData(['myBlogs'], blogs.concat(newBlog))
+      queryClient.invalidateQueries(['myBlogs'])
+      // const blogs = queryClient.getQueryData(['myBlogs'])
+      // queryClient.setQueryData(['myBlogs'], blogs.concat(newBlog))
 
       //updates users blog entries too
-      const users = queryClient.getQueryData(['myUsers'])
-      queryClient.setQueryData(
-        ['myUsers'],
-        users.map(n =>
-          n.id === newBlog.user ? { ...n, blogs: n.blogs.concat(newBlog) } : n
-        )
-      )
+      // const users = queryClient.getQueryData(['myUsers'])
+      // queryClient.setQueryData(
+      //   ['myUsers'],
+      //   users.map(n =>
+      //     n.id === newBlog.user ? { ...n, blogs: n.blogs.concat(newBlog) } : n
+      //   )
+      // )
 
       dispatch({ type: 'POST', payload: newBlog.title })
     },
