@@ -76,6 +76,8 @@ blogsRouter.put('/:id', async (req, res) => {
   const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, body, {
     new: true,
   })
+    .populate('user', { username: 1, name: 1 })
+    .populate('comments', { content: 1 })
   res.status(200).json(updatedBlog)
 })
 
