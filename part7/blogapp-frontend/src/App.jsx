@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query'
 import blogService from './services/blogs'
 import UserContext from './reducers/UserContext'
 import { Routes, Route, Link, useMatch } from 'react-router-dom'
-import './styles.css'
+import { Container } from '@mui/material'
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -79,10 +79,6 @@ const App = () => {
     blogUser = users.find(user => user.id === matchUser.params.id)
   }
 
-  const padding = {
-    padding: 5,
-  }
-
   if (!user) {
     return (
       <div>
@@ -102,9 +98,7 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>Blogs</h2>
-      <Notification />
+    <Container>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -112,7 +106,7 @@ const App = () => {
         <Route path="/users/:id" element={<User blogUser={blogUser} />} />
         <Route path="/blogs/:id" element={<Blog blog={blog} />} />
       </Routes>
-    </div>
+    </Container>
   )
 }
 

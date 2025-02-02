@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import UserContext from '../reducers/UserContext'
+import { AppBar, Toolbar, Button, Typography } from '@mui/material'
+import Notification from './Notification'
 
 const NavBar = () => {
   const padding = {
@@ -15,18 +17,23 @@ const NavBar = () => {
   }
 
   return (
-    <div>
-      <Link style={padding} to="/">
-        Blogs
-      </Link>
-      <Link style={padding} to="/users">
-        Users
-      </Link>
-      {`${user.username} logged in`}
-      <button onClick={handleLogout} type="button">
-        logout
-      </button>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <Button color="inherit" component={Link} to="/">
+          Blogs
+        </Button>
+        <Button color="inherit" component={Link} to="/users">
+          Users
+        </Button>
+        <Typography variant="h7" component="div" sx={{ flexGrow: 1 }}>
+          <b>| logged in as {user.username}</b>
+        </Typography>
+        <Notification />
+        <Button color="inherit" onClick={handleLogout}>
+          Logout
+        </Button>
+      </Toolbar>
+    </AppBar>
   )
 }
 

@@ -1,6 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import '../styles.css'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from '@mui/material'
 
 const BlogList = () => {
   const queryClient = useQueryClient()
@@ -14,15 +21,20 @@ const BlogList = () => {
   sortBlogs()
 
   return (
-    <div>
-      {blogs.map(blog => (
-        <div key={blog.id} className="blogStyle">
-          <Link to={`/blogs/${blog.id}`}>
-            {blog.title} {blog.author}
-          </Link>
-        </div>
-      ))}
-    </div>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableBody>
+          {blogs.map(blog => (
+            <TableRow key={blog.id}>
+              <TableCell>
+                <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </TableCell>
+              <TableCell>{blog.author}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 

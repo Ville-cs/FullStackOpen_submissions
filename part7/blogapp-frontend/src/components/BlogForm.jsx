@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import blogService from '../services/blogs'
 import { useNotificationDispatch } from '../reducers/NotificationContext'
+import { TextField, Button } from '@mui/material'
 
 const useField = type => {
   const [value, setValue] = useState('')
@@ -42,17 +43,6 @@ const BlogForm = ({ blogFormRef }) => {
     mutationFn: blogService.create,
     onSuccess: newBlog => {
       queryClient.invalidateQueries(['myBlogs'])
-      // const blogs = queryClient.getQueryData(['myBlogs'])
-      // queryClient.setQueryData(['myBlogs'], blogs.concat(newBlog))
-
-      //updates users blog entries too
-      // const users = queryClient.getQueryData(['myUsers'])
-      // queryClient.setQueryData(
-      //   ['myUsers'],
-      //   users.map(n =>
-      //     n.id === newBlog.user ? { ...n, blogs: n.blogs.concat(newBlog) } : n
-      //   )
-      // )
 
       dispatch({ type: 'POST', payload: newBlog.title })
     },
@@ -61,30 +51,30 @@ const BlogForm = ({ blogFormRef }) => {
   return (
     <form id="testForm" onSubmit={handleSubmit}>
       <div>
-        title:
-        <input
-          name="title"
+        <TextField
+          variant="filled"
           {...title}
           placeholder="title of the blog"
           id="title"
         />
       </div>
       <div>
-        author:
-        <input
-          name="author"
+        <TextField
+          variant="filled"
           {...author}
           placeholder="author of the blog"
           id="author"
         />
       </div>
       <div>
-        url:
-        <input name="url" {...url} placeholder="URL of the blog" id="url" />
+        <TextField
+          variant="filled"
+          {...url}
+          placeholder="URL of the blog"
+          id="url"
+        />
       </div>
-      <button className="postBlog" type="submit">
-        Post
-      </button>
+      <Button type="submit">Post</Button>
     </form>
   )
 }
