@@ -1,25 +1,18 @@
-import { useState, useEffect, useRef, useContext } from 'react'
-import loginService from './services/login'
+import { useEffect, useContext } from 'react'
 import userService from './services/users'
-import Notification from './components/Notification'
-import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import User from './components/User'
 import Home from './components/Home'
 import Blog from './components/Blog'
 import NavBar from './components/NavBar'
-import { useNotificationDispatch } from './reducers/NotificationContext'
 import { useQuery } from '@tanstack/react-query'
 import blogService from './services/blogs'
 import UserContext from './reducers/UserContext'
-import { Routes, Route, Link, useMatch } from 'react-router-dom'
+import { Routes, Route, Navigate, useMatch } from 'react-router-dom'
 import { Container } from '@mui/material'
 
 const App = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatchNotification = useNotificationDispatch()
   const [user, dispatchUser] = useContext(UserContext)
 
   useEffect(() => {
@@ -29,27 +22,6 @@ const App = () => {
       dispatchUser({ type: 'SETUSER', payload: user })
     }
   }, [dispatchUser])
-
-  const handleLogin = async event => {
-    event.preventDefault()
-
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      })
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      setUsername('')
-      setPassword('')
-      dispatchUser({ type: 'LOGIN', payload: user })
-      dispatchNotification({ type: 'LOGIN', payload: user.username })
-    } catch (error) {
-      dispatchNotification({
-        type: 'LOGIN_ERROR',
-        payload: error.response.data.error,
-      })
-    }
-  }
 
   const blogsResult = useQuery({
     queryKey: ['myBlogs'],
@@ -79,29 +51,17 @@ const App = () => {
     blogUser = users.find(user => user.id === matchUser.params.id)
   }
 
-  if (!user) {
-    return (
-      <div>
-        <h2>Login to see blogs</h2>
-        <Notification />
-        <Togglable buttonLabel="Log in here">
-          <LoginForm
-            handleLogin={handleLogin}
-            username={username}
-            password={password}
-            setUsername={setUsername}
-            setPassword={setPassword}
-          />
-        </Togglable>
-      </div>
-    )
-  }
+  if (!user) return <LoginForm />
 
   return (
     <Container>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={!user ? <LoginForm /> : <Navigate replace to="/" />}
+        />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<User blogUser={blogUser} />} />
         <Route path="/blogs/:id" element={<Blog blog={blog} />} />

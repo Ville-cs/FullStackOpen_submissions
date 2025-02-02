@@ -5,16 +5,14 @@ import { AppBar, Toolbar, Button, Typography } from '@mui/material'
 import Notification from './Notification'
 
 const NavBar = () => {
-  const padding = {
-    paddingRight: 5,
-  }
-
   const [user, dispatch] = useContext(UserContext)
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     dispatch({ type: 'LOGOUT' })
   }
+
+  if (!user) return null
 
   return (
     <AppBar position="static">

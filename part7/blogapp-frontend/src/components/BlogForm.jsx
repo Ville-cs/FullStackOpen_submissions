@@ -21,7 +21,7 @@ const useField = type => {
   }
 }
 
-const BlogForm = ({ blogFormRef }) => {
+const BlogForm = ({ toggle }) => {
   const { onReset: resetTitle, ...title } = useField('text')
   const { onReset: resetAuthor, ...author } = useField('text')
   const { onReset: resetUrl, ...url } = useField('text')
@@ -36,7 +36,6 @@ const BlogForm = ({ blogFormRef }) => {
       url: url.value,
     })
     resetTitle(), resetAuthor(), resetUrl()
-    blogFormRef.current.toggleVisibility()
   }
 
   const newBlogMutation = useMutation({
@@ -45,37 +44,41 @@ const BlogForm = ({ blogFormRef }) => {
       queryClient.invalidateQueries(['myBlogs'])
 
       dispatch({ type: 'POST', payload: newBlog.title })
+      toggle()
     },
   })
 
   return (
-    <form id="testForm" onSubmit={handleSubmit}>
-      <div>
-        <TextField
-          variant="filled"
-          {...title}
-          placeholder="title of the blog"
-          id="title"
-        />
-      </div>
-      <div>
-        <TextField
-          variant="filled"
-          {...author}
-          placeholder="author of the blog"
-          id="author"
-        />
-      </div>
-      <div>
-        <TextField
-          variant="filled"
-          {...url}
-          placeholder="URL of the blog"
-          id="url"
-        />
-      </div>
-      <Button type="submit">Post</Button>
-    </form>
+    <>
+      <form id="testForm" onSubmit={handleSubmit}>
+        <div>
+          <TextField
+            variant="filled"
+            {...title}
+            placeholder="title of the blog"
+            id="title"
+          />
+        </div>
+        <div>
+          <TextField
+            variant="filled"
+            {...author}
+            placeholder="author of the blog"
+            id="author"
+          />
+        </div>
+        <div>
+          <TextField
+            variant="filled"
+            {...url}
+            placeholder="URL of the blog"
+            id="url"
+          />
+        </div>
+        <Button type="submit">Post</Button>
+      </form>
+      <Button onClick={toggle}>cancel</Button>
+    </>
   )
 }
 
