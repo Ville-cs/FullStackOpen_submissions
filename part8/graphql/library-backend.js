@@ -121,10 +121,10 @@ const resolvers = {
         })
       }
       try {
-        const book = new Book({ ...args })
-        result = await book.save()
-        const author = await Author.findById(result.author)
+        const author = await Author.findOne({ name: args.author })
+        const book = new Book({ ...args, author: author.id })
         author.bookCount += 1
+        result = await book.save()
         await author.save()
         result.author = author
         return result
