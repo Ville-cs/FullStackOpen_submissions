@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { BooksContextProvider } from './reducers/BooksContext.jsx'
+// import { BooksContextProvider } from './reducers/BooksContext.jsx'
 import {
   ApolloClient,
   ApolloProvider,
@@ -32,12 +32,10 @@ const client = new ApolloClient({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BooksContextProvider>
-      <ApolloProvider client={client}>
-        <Router>
-          <App />
-        </Router>
-      </ApolloProvider>
-    </BooksContextProvider>
+    <ApolloProvider client={client}>
+      <Router>
+        <App />
+      </Router>
+    </ApolloProvider>
   </React.StrictMode>
 )
