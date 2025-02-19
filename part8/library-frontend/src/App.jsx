@@ -50,19 +50,23 @@ const App = () => {
         <Link to="/books">
           <button>books</button>
         </Link>
+        {token && (
+          <Link to="/newbook">
+            <button>add book</button>
+          </Link>
+        )}
+        {token && (
+          <Link to="/recommended">
+            <button>recommended</button>
+          </Link>
+        )}
         {!token ? (
           <Link to="/login">
             <button>login</button>
           </Link>
         ) : (
-          <Link to="/newbook">
-            <button>add book</button>
-          </Link>
+          <button onClick={handleLogout}>logout</button>
         )}
-        <Link to="/recommended">
-          <button>recommended</button>
-        </Link>
-        {token ? <button onClick={handleLogout}>logout</button> : null}
       </div>
 
       <Routes>
