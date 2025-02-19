@@ -1,22 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ALL_BOOKS } from '../graphql/queries'
 import { useLazyQuery } from '@apollo/client'
 
 const Books = ({ books, setBooks }) => {
   const [genres, setGenres] = useState([])
-  const { loading, error, data } = useLazyQuery(ALL_BOOKS, {
-    variables: {
-      // genre: thisGenre,
-    },
-  })
-  // let thisGenre = ''
+  const [getBooks, { data }] = useLazyQuery(ALL_BOOKS)
 
-  const filterBooks = genre => {
-    thisGenre = genre
-    // setBooks(books.filter(book => book.genres.includes(genre)))
-    // filter({ variables: { genre } })
-    // console.log(filter)
-  }
+  useEffect(() => {
+    if (data) {
+      setBooks(data.allBooks)
+    }
+  }, [data])
 
   if (books) {
     books.map(book => {
@@ -49,10 +43,14 @@ const Books = ({ books, setBooks }) => {
         </tbody>
       </table>
       {genres.map(genre => (
-        <button key={genre} onClick={() => filterBooks(genre)}>
+        <button
+          key={genre}
+          onClick={() => getBooks({ variables: { genre: genre } })}
+        >
           {genre}
         </button>
       ))}
+      <button onClick={() => getBooks()}>show all</button>
     </div>
   )
 }
