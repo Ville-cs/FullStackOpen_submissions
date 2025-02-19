@@ -16,7 +16,7 @@ const App = () => {
   const client = useApolloClient()
   const navigate = useNavigate()
   const { data: booksData } = useQuery(ALL_BOOKS)
-  const { data: userData } = useQuery(ME)
+  const { data: userData, refetch } = useQuery(ME)
 
   useEffect(() => {
     const userToken = window.localStorage.getItem('library-user-token')
@@ -24,6 +24,10 @@ const App = () => {
       setToken(userToken)
     }
   }, [])
+
+  useEffect(() => {
+    refetch()
+  }, [token])
 
   useEffect(() => {
     if (booksData) {
@@ -87,7 +91,13 @@ const App = () => {
         />
         <Route
           path="/recommended"
-          element={<Recommended books={books} userDetails={userDetails} />}
+          element={
+            token ? (
+              <Recommended books={books} userDetails={userDetails} />
+            ) : (
+              <Navigate replace to="/" />
+            )
+          }
         />
       </Routes>
     </div>
