@@ -4,6 +4,8 @@ const User = require('./models/user')
 require('dotenv').config()
 const { GraphQLError } = require('graphql')
 const jwt = require('jsonwebtoken')
+const { PubSub } = require('graphql-subscriptions')
+const pubsub = new PubSub()
 
 const resolvers = {
   Query: {
@@ -48,12 +50,14 @@ const resolvers = {
         result = await book.save()
         await author.save()
         result.author = author
-        return result
       } catch (error) {
         throw new GraphQLError('Saving book failed', {
           extensions: { code: 'BAD_USER_INPUT', invalidArgs: args.name, error },
         })
       }
+      pubsub.publish('BOOK_ADDED', { bookAdded: result })
+
+      return result
     },
     addAuthor: async (root, args, context) => {
       if (!context.currentUser) {
@@ -119,6 +123,10 @@ const resolvers = {
 
       return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
     },
+  },
+  Subscription: {
+    // bookAdded: { subscribe: () => pubsub.asyncIterator('BOOK_ADDED') },
+    bookAdded: { subscribe: () => pubsub.asyncIterableIterator('BOOK_ADDED') },
   },
 }
 
