@@ -6,8 +6,8 @@ import Login from './components/Login'
 import Recommended from './components/Recommended'
 import { Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom'
 import { useApolloClient } from '@apollo/client'
-import { ALL_BOOKS, ME } from './graphql/queries'
-import { useQuery } from '@apollo/client'
+import { ALL_BOOKS, ME, BOOK_ADDED } from './graphql/queries'
+import { useQuery, useSubscription } from '@apollo/client'
 
 const App = () => {
   const [token, setToken] = useState(null)
@@ -37,6 +37,13 @@ const App = () => {
       setUserDetails(userData.me)
     }
   }, [booksData, userData])
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data }) => {
+      console.log(data)
+      window.alert('New book was added')
+    },
+  })
 
   const handleLogout = () => {
     setToken(null)

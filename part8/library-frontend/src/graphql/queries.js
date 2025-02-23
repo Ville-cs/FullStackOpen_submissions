@@ -42,3 +42,12 @@ export const ME_AND_BOOKS = gql`
   ${BooksDetails}
   ${UserDetails}
 `
+
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      ...BooksDetails
+    }
+  }
+  ${BooksDetails}
+`
