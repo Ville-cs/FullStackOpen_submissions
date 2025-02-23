@@ -39,9 +39,13 @@ const App = () => {
   }, [booksData, userData])
 
   useSubscription(BOOK_ADDED, {
-    onData: ({ data }) => {
-      console.log(data)
-      window.alert('New book was added')
+    onData: ({ data, client }) => {
+      const addedBook = data.data.bookAdded
+      client.cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+        return {
+          allBooks: allBooks.concat(addedBook),
+        }
+      })
     },
   })
 
