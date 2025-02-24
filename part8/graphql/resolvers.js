@@ -33,7 +33,18 @@ const resolvers = {
       return results
     },
     allAuthors: async () => {
-      return await Author.find({})
+      const authors = await Author.find({})
+      const result = authors.map(author => {
+        author.bookCount = author.books.length
+        return author
+      })
+      return result
+    },
+  },
+  Author: {
+    bookCount: async root => {
+      const author = await Author.findOne({ name: root.name })
+      return author.books.length
     },
   },
   Mutation: {
@@ -46,7 +57,7 @@ const resolvers = {
       try {
         const author = await Author.findOne({ name: args.author })
         const book = new Book({ ...args, author: author.id })
-        author.bookCount += 1
+        author.books = author.books.concat(book)
         result = await book.save()
         await author.save()
         result.author = author
