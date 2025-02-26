@@ -1,3 +1,5 @@
+import { isNumber } from './utils';
+
 interface Result {
   periodLength: number;
   trainingDays: number;
@@ -8,7 +10,10 @@ interface Result {
   ratingDescription: string;
 }
 
-const calculateExerecies = (arr: number[], target: number): Result => {
+const calculateExercises = (args: string[]): Result => {
+  const arr = args.slice(3).map(arg => Number(arg));
+  const target = Number(args[2]);
+
   let trainingDays: number = arr.filter(n => n).length;
   let average: number = arr.reduce((a, b) => a + b) / arr.length;
   let rating: number;
@@ -36,4 +41,11 @@ const calculateExerecies = (arr: number[], target: number): Result => {
   };
 };
 
-console.log(calculateExerecies([5, 1, 2, 1, 2], 2));
+try {
+  isNumber(process.argv);
+  console.log(calculateExercises(process.argv));
+} catch (error: unknown) {
+  if (error instanceof Error) {
+    console.log(error.message);
+  }
+}
