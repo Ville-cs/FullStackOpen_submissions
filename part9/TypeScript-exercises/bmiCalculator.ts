@@ -5,7 +5,7 @@ export const calculateBmi = (weight: number, height: number) => {
     throw new Error('weight nor height can be 0!');
   }
 
-  let bmi: string =
+  const bmi: string =
     (weight / height / height) * 10000 < 18.5
       ? 'Underweight'
       : (weight / height / height) * 10000 > 24.9

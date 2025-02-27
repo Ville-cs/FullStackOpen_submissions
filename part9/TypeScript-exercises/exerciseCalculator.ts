@@ -14,8 +14,8 @@ const calculateExercises = (args: string[]): Result => {
   const arr = args.slice(3).map(arg => Number(arg));
   const target = Number(args[2]);
 
-  let trainingDays: number = arr.filter(n => n).length;
-  let average: number = arr.reduce((a, b) => a + b) / arr.length;
+  const trainingDays: number = arr.filter(n => n).length;
+  const average: number = arr.reduce((a, b) => a + b) / arr.length;
   let rating: number;
   let ratingDescription: string;
 
