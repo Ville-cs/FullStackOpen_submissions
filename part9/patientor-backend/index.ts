@@ -1,8 +1,12 @@
 import express from 'express';
-const app = express();
-app.use(express.json());
+import cors from 'cors';
+import { Request } from 'express';
 
-//todo allow cors
+const app = express();
+
+app.use(express.json());
+// eslint-disable-next-line
+app.use(cors<Request>());
 
 const PORT = 3001;
 
