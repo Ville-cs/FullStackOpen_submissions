@@ -57,3 +57,5 @@ https://fullstackopen.com/en/
 
 ### Part 9: TypeScript
 * typing JavaScript
+* type assertion and type narrowing
+* validating requests to the server
