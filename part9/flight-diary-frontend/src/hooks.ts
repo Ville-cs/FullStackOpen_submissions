@@ -17,3 +17,12 @@ export const useField = (type: string) => {
     onReset,
   };
 };
+
+export const useRadioInput = (kind: string, name: string) => {
+  return {
+    type: 'radio',
+    value: kind,
+    id: kind,
+    name,
+  };
+};

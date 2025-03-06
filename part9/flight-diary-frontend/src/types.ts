@@ -20,3 +20,8 @@ export interface NewDiaryProps {
   diaries: DiaryEntry[];
   setDiaries: (diaries: DiaryEntry[]) => void;
 }
+
+export interface NotificationProps {
+  notification: string;
+  setNotification: (str: string) => void;
+}
