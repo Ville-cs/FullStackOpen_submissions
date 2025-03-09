@@ -5,14 +5,26 @@ const id = uuid();
 
 const getPatients = () => {
   return patients.map(
-    ({ id, name, dateOfBirth, gender, occupation }): Partial<PatientEntry> => ({
+    ({
       id,
       name,
       dateOfBirth,
       gender,
       occupation,
+      entries,
+    }): Partial<PatientEntry> => ({
+      id,
+      name,
+      dateOfBirth,
+      gender,
+      occupation,
+      entries,
     })
   );
+};
+
+const getPatientById = (id: string) => {
+  return patients.find(obj => obj.id === id);
 };
 
 const addPatient = (entry: NewPatientEntry) => {
@@ -26,5 +38,6 @@ const addPatient = (entry: NewPatientEntry) => {
 
 export default {
   getPatients,
+  getPatientById,
   addPatient,
 };

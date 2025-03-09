@@ -10,6 +10,16 @@ patientsRouter.get('/', (_req, res) => {
   return;
 });
 
+patientsRouter.get('/:id', (req, res) => {
+  const patient = patientService.getPatientById(req.params.id);
+  if (!patient) {
+    res.status(404).json({ error: 'unknown patient' });
+    return;
+  }
+  res.status(200).json(patient);
+  return;
+});
+
 patientsRouter.post('/', (req, res) => {
   try {
     const newPatientEntry = newPatientSchema.parse(req.body);
