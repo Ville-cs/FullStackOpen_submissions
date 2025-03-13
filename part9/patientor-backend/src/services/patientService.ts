@@ -1,5 +1,5 @@
 import patients from '../data/patients';
-import { PatientEntry, NewPatientEntry } from '../types';
+import { Patient, NewPatientEntry } from '../types';
 import { v1 as uuid } from 'uuid';
 const id = uuid();
 
@@ -12,7 +12,7 @@ const getPatients = () => {
       gender,
       occupation,
       entries,
-    }): Partial<PatientEntry> => ({
+    }): Partial<Patient> => ({
       id,
       name,
       dateOfBirth,
