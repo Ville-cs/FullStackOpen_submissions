@@ -43,9 +43,14 @@ export type Entry =
   | HealthCheckEntry
   | OccupationalHealthcareEntry;
 
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
+export type EntryWithoutId = UnionOmit<Entry, 'id'>;
+
 export type NonSensitivePatientEntry = Omit<Patient, 'ssn' | 'entries'>;
 
-export type NewPatientEntry = Omit<Patient, 'id'>;
+export type NewPatientEntry = Omit<Patient, 'id' | 'entries'>;
 
 export enum Gender {
   Male = 'male',
@@ -58,4 +63,10 @@ export enum HealthCheckRating {
   'LowRisk' = 1,
   'HighRisk' = 2,
   'CriticalRisk' = 3,
+}
+
+export enum EntryType {
+  Hospital = 'Hospital',
+  HealthCheck = 'HealthCheck',
+  OccupationalHealthcare = 'OccupationalHealthcare',
 }
