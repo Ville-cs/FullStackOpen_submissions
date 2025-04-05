@@ -1,28 +1,5 @@
 import { z } from 'zod';
-// import { Gender, HealthCheckRating, EntryType } from '../types';
-import { Gender } from '../types';
-
-// const dischargeSchema = z.object({
-//   date: z.string().date(),
-//   criteria: z.string(),
-// });
-
-// const sickLeaveSchema = z.object({
-//   startDate: z.string(),
-//   endDate: z.string(),
-// });
-
-// const entrySchema = z.object({
-//   date: z.string().date(),
-//   type: z.nativeEnum(EntryType),
-//   specialist: z.string(),
-//   description: z.string(),
-//   diagnosisCodes: z.array(z.string()).optional(),
-//   employerName: z.string().optional(),
-//   discharge: dischargeSchema.optional(),
-//   sickLeave: sickLeaveSchema.optional(),
-//   healthCheckRating: z.nativeEnum(HealthCheckRating).optional(),
-// });
+import { Gender, HealthCheckRating } from '../types';
 
 export const newPatientSchema = z.object({
   name: z.string(),
@@ -30,5 +7,42 @@ export const newPatientSchema = z.object({
   ssn: z.string(),
   gender: z.nativeEnum(Gender),
   occupation: z.string(),
-  // entries: z.array(entrySchema).optional(),
+});
+
+const dischargeSchema = z.object({
+  date: z.string().date(),
+  criteria: z.string(),
+});
+
+const sickLeaveSchema = z.object({
+  startDate: z.string(),
+  endDate: z.string(),
+});
+
+export const healthCheckSchema = z.object({
+  date: z.string().date(),
+  type: z.literal('HealthCheck'),
+  specialist: z.string(),
+  description: z.string(),
+  diagnosisCodes: z.array(z.string()).optional(),
+  healthCheckRating: z.nativeEnum(HealthCheckRating),
+});
+
+export const hospitalSchema = z.object({
+  date: z.string().date(),
+  type: z.literal('Hospital'),
+  specialist: z.string(),
+  description: z.string(),
+  diagnosisCodes: z.array(z.string()).optional(),
+  discharge: dischargeSchema,
+});
+
+export const occupationalHealthcareSchema = z.object({
+  date: z.string().date(),
+  type: z.literal('OccupationalHealthcare'),
+  specialist: z.string(),
+  description: z.string(),
+  diagnosisCodes: z.array(z.string()).optional(),
+  employerName: z.string(),
+  sickLeave: sickLeaveSchema.optional(),
 });

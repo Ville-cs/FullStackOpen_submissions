@@ -45,6 +45,9 @@ const addEntry = (patient: Patient, entry: EntryWithoutId) => {
   if (!patient.entries) {
     patient.entries = [];
   }
+  if (!entry.diagnosisCodes) {
+    newEntry.diagnosisCodes = [];
+  }
   patient.entries.push(newEntry);
   return newEntry;
 };
