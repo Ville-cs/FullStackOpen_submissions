@@ -58,7 +58,7 @@ export type Entry =
 
 export interface PatientProps {
   patient: Patient;
-  setPatients: React.Dispatch<React.SetStateAction<Patient>>;
+  setPatient: React.Dispatch<React.SetStateAction<Patient>>;
   diagnoses: Diagnosis[];
 }
 

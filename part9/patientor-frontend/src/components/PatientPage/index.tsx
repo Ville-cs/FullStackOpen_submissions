@@ -3,8 +3,6 @@ import axios from 'axios';
 import {
   PatientProps,
   EntryWithoutId,
-  HealthCheckRating,
-  BaseEntryWithoutId,
   HealthCheckNoId,
   HospitalNoId,
   OccupationalHealthcareNoId,

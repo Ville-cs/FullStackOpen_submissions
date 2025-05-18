@@ -7,12 +7,7 @@ type EntryProps = {
 };
 
 const Hospital = (props: EntryProps) => {
-  const { entry, diagnoses } = props;
-
-  const findDiagnosisCode = (code: string) => {
-    const res = diagnoses.find(diagnosis => diagnosis.code === code);
-    return res ? res.name : 'code not found';
-  };
+  const { entry } = props;
 
   return (
     <div key={entry.id} style={{ border: 'solid 1.5px black' }}>
@@ -23,13 +18,6 @@ const Hospital = (props: EntryProps) => {
         Discharged on {entry.discharge.date} <br />
         Criteria {entry.discharge.criteria} <br />
       </div>
-      <ul>
-        {entry.diagnosisCodes?.map(code => (
-          <li key={code}>
-            {code} {findDiagnosisCode(code)}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

@@ -7,12 +7,7 @@ type EntryProps = {
 };
 
 const OccupationalHealthcare = (props: EntryProps) => {
-  const { entry, diagnoses } = props;
-
-  const findDiagnosisCode = (code: string) => {
-    const res = diagnoses.find(diagnosis => diagnosis.code === code);
-    return res ? res.name : 'code not found';
-  };
+  const { entry } = props;
 
   return (
     <div key={entry.id} style={{ border: 'solid 1.5px black' }}>
@@ -20,13 +15,6 @@ const OccupationalHealthcare = (props: EntryProps) => {
         {entry.date} <WorkIcon></WorkIcon> <br />
         {entry.description} <br />
         Attending doctor {entry.specialist} <br />
-        <ul>
-          {entry.diagnosisCodes?.map(code => (
-            <li key={code}>
-              {code} {findDiagnosisCode(code)}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
