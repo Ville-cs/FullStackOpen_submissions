@@ -51,18 +51,6 @@ const PatientPage = (props: PatientProps) => {
   const submitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    // TODO refactor discharge date
-
-    // const strDate: string = JSON.parse(JSON.stringify(date)).split('T')[0];
-    // const dischargeDate: string = JSON.parse(JSON.stringify(discharge)).split(
-    //   'T'
-    // )[0];
-    // const strStartDate: string = JSON.parse(JSON.stringify(startDate)).split(
-    //   'T'
-    // )[0];
-    // const strEndDate: string = JSON.parse(JSON.stringify(endDate)).split(
-    //   'T'
-    // )[0];
     let strStartDate = '';
     let strEndDate = '';
     if (startDate && endDate) {
@@ -86,7 +74,6 @@ const PatientPage = (props: PatientProps) => {
       case 'Hospital':
         (newEntry as HospitalNoId).type = 'Hospital';
         (newEntry as HospitalNoId).discharge = {
-          // date: dischargeDate,
           date: parseDate(discharge),
           criteria: criteria.value,
         };
@@ -100,8 +87,6 @@ const PatientPage = (props: PatientProps) => {
         (newEntry as OccupationalHealthcareNoId).sickLeave = {
           startDate: strStartDate,
           endDate: strEndDate,
-          // startDate: parseDate(startDate),
-          // endDate: parseDate(endDate),
         };
         submitEntry(newEntry as OccupationalHealthcareNoId);
         break;
