@@ -58,6 +58,7 @@ export type Entry =
 
 export interface PatientProps {
   patient: Patient;
+  setPatients: React.Dispatch<React.SetStateAction<Patient>>;
   diagnoses: Diagnosis[];
 }
 
@@ -67,3 +68,15 @@ export interface EntryProps {
 }
 
 export type PatientFormValues = Omit<Patient, 'id' | 'entries'>;
+export type BaseEntryWithoutId = Omit<BaseEntry, 'id'>;
+export type HealthCheckNoId = Omit<HealthCheckEntry, 'id'>;
+export type HospitalNoId = Omit<HospitalEntry, 'id'>;
+export type OccupationalHealthcareNoId = Omit<
+  OccupationalHealthcareEntry,
+  'id'
+>;
+
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
+export type EntryWithoutId = UnionOmit<Entry, 'id'>;

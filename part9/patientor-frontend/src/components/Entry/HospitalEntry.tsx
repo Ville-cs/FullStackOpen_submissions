@@ -7,27 +7,29 @@ type EntryProps = {
 };
 
 const Hospital = (props: EntryProps) => {
-  const { entry } = props;
+  const { entry, diagnoses } = props;
 
-  // const findDiagnosisCode = (code: string) => {
-  //   const res = diagnoses.find(diagnosis => diagnosis.code === code);
-  //   return res ? res.name : 'code not found';
-  // };
+  const findDiagnosisCode = (code: string) => {
+    const res = diagnoses.find(diagnosis => diagnosis.code === code);
+    return res ? res.name : 'code not found';
+  };
 
   return (
     <div key={entry.id} style={{ border: 'solid 1.5px black' }}>
       <div>
         {entry.date} <LocalHospitalIcon></LocalHospitalIcon> <br />
         {entry.description} <br />
-        Attending doctor {entry.specialist}
+        Attending doctor {entry.specialist} <br />
+        Discharged on {entry.discharge.date} <br />
+        Criteria {entry.discharge.criteria} <br />
       </div>
-      {/* <ul>
+      <ul>
         {entry.diagnosisCodes?.map(code => (
           <li key={code}>
             {code} {findDiagnosisCode(code)}
           </li>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };

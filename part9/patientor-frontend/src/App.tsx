@@ -61,7 +61,13 @@ const App = () => {
           />
           <Route
             path="/patients/:id"
-            element={<PatientPage patient={patient} diagnoses={diagnoses} />}
+            element={
+              <PatientPage
+                patient={patient}
+                setPatient={setPatient}
+                diagnoses={diagnoses}
+              />
+            }
           />
         </Routes>
       </Container>

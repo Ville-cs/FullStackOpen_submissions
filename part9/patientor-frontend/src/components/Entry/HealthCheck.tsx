@@ -8,7 +8,12 @@ type EntryProps = {
 };
 
 const HealthCheck = (props: EntryProps) => {
-  const { entry } = props;
+  const { entry, diagnoses } = props;
+
+  const findDiagnosisCode = (code: string) => {
+    const res = diagnoses.find(diagnosis => diagnosis.code === code);
+    return res ? res.name : 'code not found';
+  };
 
   const rating = (num: number) => {
     switch (num) {
@@ -30,6 +35,13 @@ const HealthCheck = (props: EntryProps) => {
         {entry.description} <br />
         {rating(entry.healthCheckRating)} <br />
         Attending doctor {entry.specialist}
+        <ul>
+          {entry.diagnosisCodes?.map(code => (
+            <li key={code}>
+              {code} {findDiagnosisCode(code)}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
