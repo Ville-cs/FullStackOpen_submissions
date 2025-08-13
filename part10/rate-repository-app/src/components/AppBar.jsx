@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import Constants from 'expo-constants';
+import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,17 +9,26 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     backgroundColor: '#2961d1ff',
   },
-  text: {
-    color: '#fff',
+  layout: {
     marginTop: 10,
+    flexDirection: 'row',
+    gap: 10,
   },
 });
 
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <Pressable>
-        <Text style={styles.text}>Repositories</Text>
+      <Pressable style={styles.layout}>
+        <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
+          Repositories
+        </Text>
+        <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
+          Create a review
+        </Text>
+        <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
+          Sign out
+        </Text>
       </Pressable>
     </View>
   );
