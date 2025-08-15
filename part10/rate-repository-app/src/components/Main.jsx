@@ -13,7 +13,6 @@ const Main = () => {
         <Route path="/signIn" element={<SignIn />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      {/* <RepositoryList /> */}
     </View>
   );
 };
