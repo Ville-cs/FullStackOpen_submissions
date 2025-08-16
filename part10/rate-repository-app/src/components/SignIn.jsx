@@ -2,6 +2,7 @@ import { View, TextInput, StyleSheet, Button } from 'react-native';
 import Text from './Text';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useState, useEffect } from 'react';
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('a username is required'),
@@ -9,6 +10,8 @@ const validationSchema = yup.object().shape({
 });
 
 const SignIn = () => {
+  const [userError, setUserError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const styles = StyleSheet.create({
     layout: {
       marginTop: 25,
@@ -35,18 +38,21 @@ const SignIn = () => {
     },
   });
 
-  let fieldError = false;
-
-  if (formik.touched.username && formik.errors.username) {
-    fieldError = true;
-  }
+  useEffect(() => {
+    formik.touched.username && formik.errors.username
+      ? setUserError(true)
+      : setUserError(false);
+    formik.touched.password && formik.errors.password
+      ? setPasswordError(true)
+      : setPasswordError(false);
+  }, [formik.errors]);
 
   return (
     <View style={styles.layout}>
       <TextInput
         style={[
           styles.border,
-          { borderColor: fieldError ? '#d73a4a' : '#3c2f2f57' },
+          { borderColor: userError ? '#d73a4a' : '#3c2f2f57' },
         ]}
         autoCapitalize={'none'}
         autoFocus={true}
@@ -60,7 +66,7 @@ const SignIn = () => {
       <TextInput
         style={[
           styles.border,
-          { borderColor: fieldError ? '#d73a4a' : '#3c2f2f57' },
+          { borderColor: passwordError ? '#d73a4a' : '#3c2f2f57' },
         ]}
         autoCapitalize={'none'}
         placeholder="Password"
