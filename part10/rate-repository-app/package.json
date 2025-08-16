@@ -19,7 +19,8 @@
     "react-native": "0.73.6",
     "react-native-web": "~0.19.6",
     "react-router-native": "^6.30.0",
-    "yup": "^1.7.0"
+    "yup": "^1.7.0",
+    "expo-font": "~11.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
