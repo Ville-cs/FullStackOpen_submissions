@@ -12,7 +12,7 @@ const theme = {
   },
   fonts: {
     main: Platform.select({
-      android: 'Roboto, sans-serif',
+      android: 'RobotoRegular',
       ios: 'arial',
       default: 'System',
     }),
