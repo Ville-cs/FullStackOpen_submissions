@@ -3,20 +3,6 @@ import Constants from 'expo-constants';
 import Text from './Text';
 import { Link } from 'react-router-native';
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: Constants.statusBarHeight,
-    paddingBottom: 20,
-    paddingLeft: 20,
-    backgroundColor: '#2961d1ff',
-  },
-  layout: {
-    marginTop: 10,
-    flexDirection: 'row',
-    gap: 10,
-  },
-});
-
 const AppBar = () => {
   return (
     <View style={styles.container}>
@@ -42,5 +28,19 @@ const AppBar = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Constants.statusBarHeight,
+    paddingBottom: 20,
+    paddingLeft: 20,
+    backgroundColor: '#2961d1ff',
+  },
+  layout: {
+    marginTop: 10,
+    flexDirection: 'row',
+    gap: 10,
+  },
+});
 
 export default AppBar;

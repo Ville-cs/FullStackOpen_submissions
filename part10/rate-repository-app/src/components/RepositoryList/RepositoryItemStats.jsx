@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import Text from './Text';
+import Text from '../Text';
 
 const RepositoryItemStats = ({ item }) => {
   const styles = StyleSheet.create({
