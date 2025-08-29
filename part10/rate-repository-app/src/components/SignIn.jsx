@@ -3,6 +3,8 @@ import Text from './Text';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useState, useEffect } from 'react';
+import useSignIn from '../hooks/useSignIn';
+import { useNavigate } from 'react-router';
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('a username is required'),
@@ -10,22 +12,22 @@ const validationSchema = yup.object().shape({
 });
 
 const SignIn = () => {
+  const [signIn] = useSignIn();
   const [userError, setUserError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const styles = StyleSheet.create({
-    layout: {
-      marginTop: 25,
-      marginHorizontal: 25,
-      gap: 25,
-    },
-    border: {
-      borderStyle: 'solid',
-      borderWidth: 1,
-      borderColor: '#3c2f2f57',
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-    },
-  });
+  const navigate = useNavigate();
+
+  const onSubmit = async values => {
+    const { username, password } = values;
+
+    try {
+      const data = await signIn({ username, password });
+      console.log(data.authenticate.accessToken);
+      navigate('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -33,9 +35,7 @@ const SignIn = () => {
       password: '',
     },
     validationSchema,
-    onSubmit: values => {
-      console.log(values);
-    },
+    onSubmit,
   });
 
   useEffect(() => {
@@ -81,5 +81,20 @@ const SignIn = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  layout: {
+    marginTop: 25,
+    marginHorizontal: 25,
+    gap: 25,
+  },
+  border: {
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#3c2f2f57',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+});
 
 export default SignIn;

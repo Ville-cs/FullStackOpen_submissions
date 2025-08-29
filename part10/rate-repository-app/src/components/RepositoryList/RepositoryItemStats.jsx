@@ -2,18 +2,6 @@ import { View, StyleSheet } from 'react-native';
 import Text from '../Text';
 
 const RepositoryItemStats = ({ item }) => {
-  const styles = StyleSheet.create({
-    stats: {
-      flexDirection: 'row',
-      gap: 40,
-      justifyContent: 'center',
-    },
-    statItem: {
-      alignItems: 'center',
-      gap: 5,
-    },
-  });
-
   return (
     <View style={styles.stats}>
       <View style={styles.statItem}>
@@ -43,5 +31,17 @@ const RepositoryItemStats = ({ item }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  stats: {
+    flexDirection: 'row',
+    gap: 40,
+    justifyContent: 'center',
+  },
+  statItem: {
+    alignItems: 'center',
+    gap: 5,
+  },
+});
 
 export default RepositoryItemStats;

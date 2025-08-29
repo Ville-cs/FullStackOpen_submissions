@@ -10,7 +10,7 @@ const useRepositories = () => {
   });
 
   useEffect(() => {
-    data && setRepositories(data.repositories);
+    setRepositories(data?.repositories);
   }, [loading]);
 
   return { repositories, loading, refetch };
