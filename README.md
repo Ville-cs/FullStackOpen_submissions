@@ -59,3 +59,8 @@ https://fullstackopen.com/en/
 * typing JavaScript
 * type assertion and type narrowing
 * validating requests to the server
+
+### Part 10: React Native
+* Mobile app development
+* Setting up mobile development environment
+* Platform specific code
