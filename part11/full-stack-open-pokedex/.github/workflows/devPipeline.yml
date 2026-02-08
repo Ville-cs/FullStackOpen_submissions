@@ -1,0 +1,33 @@
+name: Dev workflow test
+
+env:
+  SKIP: '#skip'
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  env_variables:
+    runs-on: ubuntu-latest
+    outputs:
+      skip_present: ${{ steps.detect_skip.outputs.skip_present }}
+    steps:
+      - name: detect skip token
+        id: detect_skip
+        run: |
+          messages='${{ toJson(github.event.commits.*.message) }}'
+
+          if echo "$messages" | grep -qi '#skip'; then
+            echo "skip_present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip_present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  dev_workflow:
+    needs: [env_variables]
+    if: ${{ needs.env_variables.outputs.skip_present == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running dev workflow"

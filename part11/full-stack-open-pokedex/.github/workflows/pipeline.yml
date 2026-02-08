@@ -1,0 +1,89 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+jobs:
+  env_variables:
+    runs-on: ubuntu-latest
+    outputs:
+      skip_present: ${{ steps.detect_skip.outputs.skip_present }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: github context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: commits
+        env:
+          COMMITS: ${{ toJson(github.event.commits) }}
+        run: echo "$COMMITS"
+      - name: detect skip token
+        id: detect_skip
+        run: |
+          messages='${{ toJson(github.event.commits.*.message) }}'
+
+          if echo "$messages" | grep -qi '#skip'; then
+            echo "skip_present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip_present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  simple_deployment_pipeline:
+    needs: [env_variables]
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - run: npm run eslint
+      - run: npm run test
+      - name: build
+        if: ${{ needs.env_variables.outputs.skip_present == 'false' }}
+        run: npm run build
+
+  tag_release:
+    needs: [env_variables]
+    if: ${{ github.event_name == 'push' && needs.env_variables.outputs.skip_present == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - uses: anothrNick/github-tag-action@1.75.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_PREFIX: v
+          DEFAULT_BUMP: patch
+
+  notifications:
+    # sends notifications to my private Discord server
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-latest
+    steps:
+      - name: success notification
+        uses: sarisia/actions-status-discord@v1
+        if: success() && needs.simple_deployment_pipeline.result == 'success'
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: Success
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          title: Deployment successful
+          description: Deployment successful for `${{ github.repository }}` | `SHA ${{ github.sha }}`
+      - name: failure notification
+        uses: sarisia/actions-status-discord@v1
+        if: failure() && needs.simple_deployment_pipeline.result == 'failure'
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          status: Failure
+          title: Deployment failed
+          description: Deployment failed for `${{ github.repository }}` | `SHA ${{ github.sha }}`
