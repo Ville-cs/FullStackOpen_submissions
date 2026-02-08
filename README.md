@@ -64,3 +64,9 @@ https://fullstackopen.com/en/
 * Mobile app development
 * Setting up mobile development environment
 * Platform specific code
+
+### Part 11: CI/CD
+* GitHub workflows
+* Ensuring that the default branch is protected and always in a working state
+* Automated tests and builds before committing
+* Automatic deployment to production and notifications to 3rd parties
