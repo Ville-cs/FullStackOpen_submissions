@@ -70,3 +70,10 @@ https://fullstackopen.com/en/
 * Ensuring that the default branch is protected and always in a working state
 * Automated tests and builds before committing
 * Automatic deployment to production and notifications to 3rd parties
+
+### Part 12: Docker, Images and Containers
+* Docker CLI
+* Buildling images and running containers
+* Development in containers
+* Containers in production
+* Using Docker DNS and nginx proxy
