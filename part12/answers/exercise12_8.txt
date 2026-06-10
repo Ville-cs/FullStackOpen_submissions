@@ -1,0 +1,65 @@
+Script started on 2026-02-28 10:14:54+02:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="136" LINES="24"]
+[?2004h]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications[00m$ cd todo-app/todo-backend/
+[?2004l[?2004h]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ ls
+[?2004lapp.js  docker-compose.dev.yml  Dockerfile  [0m[01;34mnode_modules[0m  package-lock.json  [01;34mredis[0m      [01;34mroutes[0m
+[01;34mbin[0m     docker-compose.yml      [01;34mmongo[0m       package.json  README.md          rest.http  [01;34mutil[0m
+[?2004h]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ lscd todo-app/todo-backend/exit[Kdocker exec -it todo-backend-mongo-1 mongosh -u root -p example[A]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ exit[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd todo-app/todo-backend/ls[K[Klscd todo-app/todo-backend/exit[Kdocker exec -it todo-backend-mongo-1 mongosh -u root -p example[A]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ [C[C[C[C[C[C[Ccontainer ls[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls[Kcd todo-app/todo-backend/[6Pdocker container lsstop todo-backend-mongo-1 ls[Kcat docker-compose.dev.yml docker compose -f docker-compose.dev.yml up -d
+[?2004l[?2004h]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ docker compose -f docker-compose.dev.yml up -dls[Kcd todo-app/todo-backend/exit[Kdocker exec -it todo-backend-mongo-1 mongosh -u root -p example[A]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ exit[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd todo-app/todo-backend/ls[Kdocker compose -f docker-compose.dev.yml up -d[Kdocker container ls
+[?2004lCONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS          PORTS                                           NAMES
+6af7df5f7c77   mongo     "docker-entrypoint.s…"   10 days ago   Up 20 seconds   0.0.0.0:3456->27017/tcp, [::]:3456->27017/tcp   todo-backend-mongo-1
+[?2004h]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ docker container lsmpose -f docker-compose.dev.yml up -dls[Kcd todo-app/todo-backend/exit[Kdocker exec -it todo-backend-mongo-1 mongosh -u root -p example
+[?2004l]0;mongosh mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000Current Mongosh Log ID:	69a2a45c02c7d87eec8ce5af
+Connecting to:		[1m[32mmongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.6.0[0m
+Using MongoDB:		8.2.5
+[1m[33mUsing Mongosh[0m:		2.6.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+[1G[0J [1G[?2004h[1m[33m------[0m
+   [1m[33mThe server generated these startup warnings when booting[0m
+   2026-02-28T08:15:56.304+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2026-02-28T08:15:56.452+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2026-02-28T08:15:56.452+00:00: We suggest setting the contents of sysfsFile to 0.
+   2026-02-28T08:15:56.452+00:00: We suggest setting swappiness to 0 or 1, as swapping can cause performance problems.
+[1m[33m------[0m
+
+[1G[0Jtest> [7Gshow dbs
+[1madmin[0m         100.00 KiB
+[1mconfig[0m        108.00 KiB
+[1mlocal[0m          80.00 KiB
+[1mthe_database[0m   68.00 KiB
+[1G[0Jtest> [7Guse the_database
+switched to db the_database
+[1G[0Jthe_database> [15Gshow collections
+[1mtodos[0m
+[1G[0Jthe_database> [15G[1G[0Jthe_database> show collections[31G[1G[0Jthe_database> use the_database[31G[1G[0Jthe_database> show dbs[23G[1G[0Jthe_database> exit[19G[1G[0Jthe_database> show collections[31G[1G[0Jthe_database> db.collections.drop()[36G[1G[0Jthe_database> show collections[31G[1G[0Jthe_database> db.collection.drop()[35G[1G[0Jthe_database> db.collections.find()[36G[1G[0Jthe_database> db.collections.find[34G[1G[0Jthe_database> show collections[31G[1G[0Jthe_database> db.todos.find()[30G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [32m"test mongosh"[39m, [33mdone[39m: [33mfalse[39m})[76G[1G[0Jthe_database> db.todos.find()[30G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [32m"test mongosh"[39m, [33mdone[39m: [33mfalse[39m})[76G[2D[1G[0Jthe_database> db.collections.insertOne([44m{[49m[33mtext[39m: [32m"test mongosh"[39m, [33mdone[39m: [33mfalse[39m})[74G[5D[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [32m"test mongosh"[39m, [33mdone[39m: [33mfalse[39m})[69G[2D[4D[3D[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest mongosh"[39m, [33mdone[39m: [33mfalse[39m})[60G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest mongos"[39m, [33mdone[39m: [33mfalse[39m})[59G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest mongo"[39m, [33mdone[39m: [33mfalse[39m})[58G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest mong"[39m, [33mdone[39m: [33mfalse[39m})[57G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest mon"[39m, [33mdone[39m: [33mfalse[39m})[56G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest mo"[39m, [33mdone[39m: [33mfalse[39m})[55G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest m"[39m, [33mdone[39m: [33mfalse[39m})[54G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest "[39m, [33mdone[39m: [33mfalse[39m})[53G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtest"[39m, [33mdone[39m: [33mfalse[39m})[52G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mtes"[39m, [33mdone[39m: [33mfalse[39m})[51G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mte"[39m, [33mdone[39m: [33mfalse[39m})[50G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49mt"[39m, [33mdone[39m: [33mfalse[39m})[49G[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [44m[32m"[49m"[39m, [33mdone[39m: [33mfalse[39m})[48GIncrease the number of tools in my tool belt[16C[1G[0Jthe_database> db.collections.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[108G[93D[2C[1C[11C[1G[0Jthe_database> db.collection.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[28G[1G[0Jthe_database> db.collectio.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[27G[1G[0Jthe_database> db.collecti.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[26G[1G[0Jthe_database> db.collect.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[25G[1G[0Jthe_database> db.collec.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[24G[1G[0Jthe_database> db.colle.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[23G[1G[0Jthe_database> db.coll.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[22G[1G[0Jthe_database> db.col.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[21G[1G[0Jthe_database> db.co.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[20G[1G[0Jthe_database> db.c.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[19G[1G[0Jthe_database> db..insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[18G[1G[0Jthe_database> db.t.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[19G[1G[0Jthe_database> db.to.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[20G[1G[0Jthe_database> db.tod.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[21G[1G[0Jthe_database> db.todo.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[22G[1G[0Jthe_database> db.todos.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[23G[79C
+{
+  acknowledged: [33mtrue[39m,
+  insertedId: ObjectId([32m'69a2a4a702c7d87eec8ce5b0'[39m)
+}
+[1G[0Jthe_database> [15G[1G[0Jthe_database> db.todos.insertOne({[33mtext[39m: [32m"Increase the number of tools in my tool belt"[39m, [33mdone[39m: [33mfalse[39m})[102G[1G[0Jthe_database> show collections[31G[1G[0Jthe_database> show collection[30G[1G[0Jthe_database> show collectio[29G[1G[0Jthe_database> show collecti[28G[1G[0Jthe_database> show collect[27G[1G[0Jthe_database> show collec[26G[1G[0Jthe_database> show colle[25G[1G[0Jthe_database> show coll[24G[1G[0Jthe_database> show col[23G[1G[0Jthe_database> show co[22G[1G[0Jthe_database> show c[21G[1G[0Jthe_database> show [20G[1G[0Jthe_database> show[19G[1G[0Jthe_database> sho[18G[1G[0Jthe_database> sh[17G[1G[0Jthe_database> s[16G[1G[0Jthe_database> [15Gdb.todos.find()
+[
+  {
+    _id: ObjectId([32m'6994b2cf385be1221a8ce5b0'[39m),
+    text: [32m'Write code'[39m,
+    done: [33mtrue[39m
+  },
+  {
+    _id: ObjectId([32m'6994b2cf385be1221a8ce5b1'[39m),
+    text: [32m'Learn about containers'[39m,
+    done: [33mfalse[39m
+  },
+  {
+    _id: ObjectId([32m'69a2a4a702c7d87eec8ce5b0'[39m),
+    text: [32m'Increase the number of tools in my tool belt'[39m,
+    done: [33mfalse[39m
+  }
+]
+[1G[0Jthe_database> [15Gexit
+[?2004l]0;[?2004h]0;ville@ville-pc: ~/Documents/fso/part12-containers-applications/todo-app/todo-backend[01;32mville@ville-pc[00m:[01;34m~/Documents/fso/part12-containers-applications/todo-app/todo-backend[00m$ exit
+[?2004lexit
+
+Script done on 2026-02-28 10:18:21+02:00 [COMMAND_EXIT_CODE="0"]
