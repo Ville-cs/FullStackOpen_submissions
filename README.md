@@ -77,3 +77,9 @@ https://fullstackopen.com/en/
 * Development in containers
 * Containers in production
 * Using Docker DNS and nginx proxy
+
+### Part 13: Relational Databases
+* PostgreSQL
+* Object-relational mapping with Sequelize
+* Database changes through migrations
+* SQL vs NoSQL
