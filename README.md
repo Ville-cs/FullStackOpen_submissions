@@ -83,3 +83,10 @@ https://fullstackopen.com/en/
 * Object-relational mapping with Sequelize
 * Database changes through migrations
 * SQL vs NoSQL
+
+### Part 14: Next.JS
+* A full stack blogapp built with Next.js
+* Server side rendering
+* Routing and authentication in Next.js
+* Neon Postgres backend and Drizzle ORM
+* Styling with Tailwind.css and Shadcn
