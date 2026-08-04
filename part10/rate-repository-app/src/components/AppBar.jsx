@@ -14,16 +14,11 @@ const AppBar = () => {
               Repositories
             </Text>
           </Link>
-          <Link to="/">
+          {/* <Link to="/">
             <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
               Create a review
             </Text>
-          </Link>
-          <Link to="/">
-            <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
-              Create a review
-            </Text>
-          </Link>
+          </Link> */}
           <Link to="signIn">
             <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
               Sign in
