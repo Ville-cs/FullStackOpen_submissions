@@ -1,5 +1,5 @@
-import { View, Image, StyleSheet } from 'react-native';
-import Text from '../Text';
+import { View, Image, StyleSheet } from "react-native";
+import Text from "../Text";
 
 const RepositoryItemInfo = ({ item }) => {
   return (
@@ -10,13 +10,13 @@ const RepositoryItemInfo = ({ item }) => {
           uri: item.ownerAvatarUrl,
         }}
       />
-      <View>
+      <View style={styles.content}>
         <Text fontSize="subheading" fontWeight="bold">
           {item.fullName}
         </Text>
         <Text style={styles.textMargin}>{item.description}</Text>
         <Text
-          style={[styles.bgPadding, styles.textMargin, { marginBottom: 20 }]}
+          style={[styles.bgPadding, styles.textMargin, styles.languageMargin]}
           color="textSecondary"
           backgroundColor="blue"
         >
@@ -35,17 +35,24 @@ const styles = StyleSheet.create({
   bgPadding: {
     paddingHorizontal: 10,
     paddingVertical: 10,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     borderRadius: 10,
   },
   flex: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 20,
     marginLeft: 15,
   },
+  content: {
+    flex: 1,
+    flexShrink: 1,
+  },
   textMargin: {
     marginTop: 5,
-    marginRight: 80, //stops text overflow to right
+    marginRight: 20,
+  },
+  languageMargin: {
+    marginBottom: 20,
   },
 });
 

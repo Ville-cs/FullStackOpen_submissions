@@ -1,28 +1,25 @@
-import { Platform } from 'react-native';
-
 const theme = {
   colors: {
-    textPrimary: '#24292e',
-    textSecondary: '#fff',
-    primary: '#0366d6',
+    textPrimary: "#24292e",
+    textSecondary: "#fff",
+    primary: "#0366d6",
   },
   fontSizes: {
     body: 14,
     subheading: 16,
   },
   fonts: {
-    main: Platform.select({
-      android: 'RobotoRegular',
-      ios: 'arial',
-      default: 'System',
-    }),
+    main: "System",
   },
   fontWeights: {
-    normal: '400',
-    bold: '700',
+    normal: "400",
+    bold: "700",
+  },
+  appBar: {
+    primary: "#2961d1ff",
   },
   textBg: {
-    backgroundColor: '#2961d1ff',
+    backgroundColor: "#2961d1ff",
   },
 };
 
