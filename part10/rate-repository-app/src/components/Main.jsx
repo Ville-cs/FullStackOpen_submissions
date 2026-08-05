@@ -3,17 +3,18 @@ import { Route, Routes, Navigate } from "react-router-native";
 import AppBar from "./AppBar";
 import RepositoryList from "./RepositoryList";
 import SignIn from "./SignIn";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Main = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
-    </View>
+    </SafeAreaView>
   );
 };
 
