@@ -3,8 +3,14 @@ import { Link } from "react-router-native";
 import Constants from "expo-constants";
 import Text from "./Text";
 import theme from "../theme";
+import { ME } from "../graphql/queries";
+import { useQuery } from "@apollo/client/react";
+import useLogout from "../hooks/useLogout";
 
 const AppBar = () => {
+  const logout = useLogout();
+  const { data } = useQuery(ME);
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
@@ -14,16 +20,26 @@ const AppBar = () => {
               Repositories
             </Text>
           </Link>
-          {/* <Link to="/">
-            <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
-              Create a review
+          {data?.me ? (
+            <Text
+              fontSize="subheading"
+              color="textSecondary"
+              fontWeight="bold"
+              onPress={() => logout()}
+            >
+              Sign out
             </Text>
-          </Link> */}
-          <Link to="signIn">
-            <Text fontSize="subheading" color="textSecondary" fontWeight="bold">
-              Sign in
-            </Text>
-          </Link>
+          ) : (
+            <Link to="signIn">
+              <Text
+                fontSize="subheading"
+                color="textSecondary"
+                fontWeight="bold"
+              >
+                Sign in
+              </Text>
+            </Link>
+          )}
         </Pressable>
       </ScrollView>
     </View>
