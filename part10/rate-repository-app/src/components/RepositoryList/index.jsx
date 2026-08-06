@@ -13,6 +13,7 @@ export const RepositoryListContainer = ({ repositories }) => {
   return (
     <FlatList
       data={repositoryNodes}
+      keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem item={item} />}
     />
@@ -26,6 +27,9 @@ const RepositoryList = () => {
   }
   if (error) {
     return <Text>Error while fetching the data</Text>;
+  }
+  if (!repositories) {
+    return <Text>No repositories found</Text>;
   }
   return <RepositoryListContainer repositories={repositories} />;
 };
