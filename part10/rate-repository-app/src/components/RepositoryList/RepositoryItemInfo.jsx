@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   flex: {
     flexDirection: "row",
     gap: 20,
-    marginLeft: 15,
   },
   content: {
     flex: 1,
@@ -49,7 +48,6 @@ const styles = StyleSheet.create({
   },
   textMargin: {
     marginTop: 5,
-    marginRight: 20,
   },
   languageMargin: {
     marginBottom: 20,
