@@ -4,7 +4,7 @@ import RepositoryItemInfo from "./RepositoryItemInfo";
 
 const RepositoryItem = ({ item }) => {
   return (
-    <View style={styles.margin} testId="repositoryItem">
+    <View style={styles.margin} data-testId="repositoryItem">
       <RepositoryItemInfo item={item} />
       <RepositoryItemStats item={item} />
     </View>
