@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: theme.appBar.primary,
+    marginBottom: 25,
   },
   layout: {
     marginTop: 10,
