@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   },
   margin: {
     marginHorizontal: 15,
+    flex: 1,
   },
 });
 

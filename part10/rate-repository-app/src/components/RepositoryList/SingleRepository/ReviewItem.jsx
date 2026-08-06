@@ -23,7 +23,6 @@ const ReviewItem = ({ review }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 25,
-    flex: 1,
     flexDirection: "row",
     gap: 20,
   },
