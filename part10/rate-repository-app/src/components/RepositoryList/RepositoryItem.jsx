@@ -1,20 +1,18 @@
-import { View, StyleSheet } from "react-native";
+import { View, Pressable } from "react-native";
 import RepositoryItemStats from "./RepositoryItemStats";
 import RepositoryItemInfo from "./RepositoryItemInfo";
+import { useNavigate } from "react-router-native";
 
 const RepositoryItem = ({ item }) => {
+  const navigate = useNavigate();
   return (
-    <View style={styles.margin} testID="repositoryItem">
-      <RepositoryItemInfo item={item} />
-      <RepositoryItemStats item={item} />
+    <View testID="repositoryItem">
+      <Pressable onPress={() => navigate(item.id)}>
+        <RepositoryItemInfo item={item} />
+        <RepositoryItemStats item={item} />
+      </Pressable>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  margin: {
-    marginTop: 25,
-  },
-});
 
 export default RepositoryItem;
