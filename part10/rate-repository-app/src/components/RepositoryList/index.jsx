@@ -1,6 +1,7 @@
 import useRepositories from "../../hooks/useRepositories";
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native";
 import RepositoryItem from "./RepositoryItem";
+import Text from "../Text";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -19,8 +20,13 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
-
+  const { repositories, loading, error } = useRepositories();
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+  if (error) {
+    return <Text>Error while fetching the data</Text>;
+  }
   return <RepositoryListContainer repositories={repositories} />;
 };
 
