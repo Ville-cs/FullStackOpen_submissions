@@ -21,14 +21,25 @@ const AppBar = () => {
             </Text>
           </Link>
           {data?.me ? (
-            <Text
-              fontSize="subheading"
-              color="textSecondary"
-              fontWeight="bold"
-              onPress={() => logout()}
-            >
-              Sign out
-            </Text>
+            <View style={styles.loggedIn}>
+              <Link to="createReview">
+                <Text
+                  fontSize="subheading"
+                  color="textSecondary"
+                  fontWeight="bold"
+                >
+                  Create a review
+                </Text>
+              </Link>
+              <Text
+                fontSize="subheading"
+                color="textSecondary"
+                fontWeight="bold"
+                onPress={() => logout()}
+              >
+                Sign out
+              </Text>
+            </View>
           ) : (
             <Link to="signIn">
               <Text
@@ -57,6 +68,10 @@ const styles = StyleSheet.create({
   },
   layout: {
     marginTop: 10,
+    flexDirection: "row",
+    gap: 10,
+  },
+  loggedIn: {
     flexDirection: "row",
     gap: 10,
   },
