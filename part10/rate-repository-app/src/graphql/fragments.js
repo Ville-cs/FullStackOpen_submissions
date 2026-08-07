@@ -12,6 +12,7 @@ export const REPOSITORY_INFO = gql`
     reviewCount
     stargazersCount
     url
+    ownerName
   }
 `;
 
