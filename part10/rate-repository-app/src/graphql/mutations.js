@@ -11,7 +11,7 @@ export const AUTHENTICATE = gql`
 
 export const REVIEW_REPOSITORY = gql`
   mutation ($review: CreateReviewInput) {
-    authenticate(review: $review) {
+    createReview(review: $review) {
       id
       rating
       text
