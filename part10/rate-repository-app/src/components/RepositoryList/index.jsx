@@ -36,7 +36,7 @@ const RepositoryList = () => {
 
 const styles = StyleSheet.create({
   separator: {
-    height: 10,
+    height: 30,
   },
 });
 
