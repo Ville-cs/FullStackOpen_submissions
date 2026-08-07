@@ -21,7 +21,7 @@ const AppBar = () => {
             </Text>
           </Link>
           {data?.me ? (
-            <View style={styles.loggedIn}>
+            <View style={styles.subContainer}>
               <Link to="createReview">
                 <Text
                   fontSize="subheading"
@@ -41,15 +41,26 @@ const AppBar = () => {
               </Text>
             </View>
           ) : (
-            <Link to="signIn">
-              <Text
-                fontSize="subheading"
-                color="textSecondary"
-                fontWeight="bold"
-              >
-                Sign in
-              </Text>
-            </Link>
+            <View style={styles.subContainer}>
+              <Link to="signIn">
+                <Text
+                  fontSize="subheading"
+                  color="textSecondary"
+                  fontWeight="bold"
+                >
+                  Sign in
+                </Text>
+              </Link>
+              <Link to="signUp">
+                <Text
+                  fontSize="subheading"
+                  color="textSecondary"
+                  fontWeight="bold"
+                >
+                  Sign Up
+                </Text>
+              </Link>
+            </View>
           )}
         </Pressable>
       </ScrollView>
@@ -69,11 +80,11 @@ const styles = StyleSheet.create({
   layout: {
     marginTop: 10,
     flexDirection: "row",
-    gap: 10,
+    gap: 15,
   },
-  loggedIn: {
+  subContainer: {
     flexDirection: "row",
-    gap: 10,
+    gap: 15,
   },
 });
 
