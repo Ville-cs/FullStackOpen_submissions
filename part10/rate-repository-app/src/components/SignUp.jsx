@@ -66,6 +66,7 @@ const SignUp = () => {
         formik={formik}
         name="passwordConfirm"
         placeholder="Confirm password"
+        autoCapitalize="none"
         secureTextEntry
       />
       <Button onPress={formik.handleSubmit} title="Sign Up"></Button>
