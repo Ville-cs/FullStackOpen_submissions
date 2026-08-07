@@ -1,7 +1,7 @@
 import { View, Button, StyleSheet } from "react-native";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import FormikTextInput from "./FormikTextInput";
+import FormikTextInput from "../Formik/FormikTextInput";
 import useSignIn from "../../hooks/useSignIn";
 import { useNavigate } from "react-router";
 
