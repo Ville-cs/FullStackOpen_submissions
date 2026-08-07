@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import Text from "../../Text";
+import { format } from "date-fns";
 
 const ReviewItem = ({ review }) => {
   return (
@@ -13,7 +14,7 @@ const ReviewItem = ({ review }) => {
         <Text fontSize="subheading" fontWeight="bold">
           {review.user.username}
         </Text>
-        <Text style={styles.margin}>{review.createdAt}</Text>
+        <Text style={styles.margin}>{format(review.createdAt, "PP")}</Text>
         <Text style={styles.margin}>{review.text}</Text>
       </View>
     </View>
