@@ -24,10 +24,14 @@ const styles = StyleSheet.create({
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
   },
+  errorStyling: {
+    color: theme.error.primary,
+  },
 });
 
 const Text = ({
   color,
+  error,
   backgroundColor,
   fontSize,
   fontWeight,
@@ -40,6 +44,7 @@ const Text = ({
     color === "primary" && styles.colorPrimary,
     fontSize === "subheading" && styles.fontSizeSubheading,
     fontWeight === "bold" && styles.fontWeightBold,
+    error && styles.errorStyling,
     backgroundColor === "blue" && styles.textBg,
     style,
   ];

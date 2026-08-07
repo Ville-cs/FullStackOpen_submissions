@@ -27,6 +27,9 @@ const theme = {
   textBg: {
     backgroundColor: "#2961d1ff",
   },
+  error: {
+    primary: "#d73a4a",
+  },
 };
 
 export default theme;
