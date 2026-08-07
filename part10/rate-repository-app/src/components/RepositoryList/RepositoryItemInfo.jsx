@@ -15,13 +15,15 @@ const RepositoryItemInfo = ({ item }) => {
           {item.fullName}
         </Text>
         <Text style={styles.textMargin}>{item.description}</Text>
-        <Text
-          style={[styles.bgPadding, styles.textMargin, styles.languageMargin]}
-          color="textSecondary"
-          backgroundColor="blue"
-        >
-          {item.language}
-        </Text>
+        <View style={styles.languageContainer}>
+          <Text
+            color="textSecondary"
+            backgroundColor="blue"
+            style={styles.bgPadding}
+          >
+            {item.language}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -35,21 +37,18 @@ const styles = StyleSheet.create({
   bgPadding: {
     paddingHorizontal: 10,
     paddingVertical: 10,
-    alignSelf: "flex-start",
     borderRadius: 10,
   },
   flex: {
     flexDirection: "row",
     gap: 20,
   },
-  content: {
-    flex: 1,
-    flexShrink: 1,
-  },
   textMargin: {
     marginTop: 5,
   },
-  languageMargin: {
+  languageContainer: {
+    alignSelf: "flex-start",
+    marginTop: 5,
     marginBottom: 20,
   },
 });
