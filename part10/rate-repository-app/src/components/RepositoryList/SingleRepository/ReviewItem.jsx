@@ -3,6 +3,9 @@ import Text from "../../Text";
 import { format } from "date-fns";
 
 const ReviewItem = ({ review }) => {
+  const title = review.repository
+    ? `${review.repository.ownerName}/${review.repository.name}`
+    : review.user.username;
   return (
     <View style={styles.container}>
       <View style={styles.rating}>
@@ -10,9 +13,9 @@ const ReviewItem = ({ review }) => {
           {review.rating}
         </Text>
       </View>
-      <View>
+      <View style={styles.content}>
         <Text fontSize="subheading" fontWeight="bold">
-          {review.user.username}
+          {title}
         </Text>
         <Text style={styles.margin}>{format(review.createdAt, "PP")}</Text>
         <Text style={styles.margin}>{review.text}</Text>
@@ -27,10 +30,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 20,
   },
+  content: {
+    flex: 1,
+  },
   rating: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 75,
+    height: 75,
+    borderRadius: 40,
     borderWidth: 2,
     borderColor: "#0366d6",
     justifyContent: "center",
