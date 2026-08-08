@@ -36,3 +36,9 @@ export const REVIEW_REPOSITORY = gql`
   ${REPOSITORY_INFO}
   ${USER_DETAILS}
 `;
+
+export const DELETE_REVIEW = gql`
+  mutation Mutation($deleteReviewId: ID!) {
+    deleteReview(id: $deleteReviewId)
+  }
+`;
