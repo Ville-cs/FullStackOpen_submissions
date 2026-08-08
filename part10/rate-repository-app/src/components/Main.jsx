@@ -6,6 +6,7 @@ import SingleRepository from "./RepositoryList/SingleRepository";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import CreateReview from "./CreateReview";
+import MyReviews from "./MyReviews";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Main = () => {
@@ -18,6 +19,7 @@ const Main = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/createReview" element={<CreateReview />} />
+          <Route path="/myReviews" element={<MyReviews />} />
           <Route path="/:id" element={<SingleRepository />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

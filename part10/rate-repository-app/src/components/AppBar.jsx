@@ -3,13 +3,13 @@ import { Link } from "react-router-native";
 import Constants from "expo-constants";
 import Text from "./Text";
 import theme from "../theme";
-import { ME } from "../graphql/queries";
-import { useQuery } from "@apollo/client/react";
 import useLogout from "../hooks/useLogout";
+import useGetUser from "../hooks/useGetUser";
 
 const AppBar = () => {
   const logout = useLogout();
-  const { data } = useQuery(ME);
+  const { data: userData } = useGetUser();
+  // const { data: userData } = useGetUser({ includeReviews: true });
 
   return (
     <View style={styles.container}>
@@ -20,7 +20,7 @@ const AppBar = () => {
               Repositories
             </Text>
           </Link>
-          {data?.me ? (
+          {userData ? (
             <View style={styles.subContainer}>
               <Link to="createReview">
                 <Text
@@ -29,6 +29,15 @@ const AppBar = () => {
                   fontWeight="bold"
                 >
                   Create a review
+                </Text>
+              </Link>
+              <Link to="myReviews">
+                <Text
+                  fontSize="subheading"
+                  color="textSecondary"
+                  fontWeight="bold"
+                >
+                  My reviews
                 </Text>
               </Link>
               <Text
