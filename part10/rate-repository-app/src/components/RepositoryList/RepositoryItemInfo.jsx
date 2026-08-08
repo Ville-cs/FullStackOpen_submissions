@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  content: {
+    flex: 1,
+  },
   bgPadding: {
     paddingHorizontal: 10,
     paddingVertical: 10,
