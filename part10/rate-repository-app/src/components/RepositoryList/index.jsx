@@ -27,7 +27,7 @@ export const RepositoryListContainer = ({ repositories }) => {
 const RepositoryList = () => {
   const [options, setOptions] = useState({});
   const [selectedSort, setSelectedSort] = useState("latest");
-  const [searchKeyword, setSearchKeyword] = useState({});
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [delayedSearchKeyword] = useDebounce(searchKeyword, 750);
   const sortOptions = {
     latest: {
