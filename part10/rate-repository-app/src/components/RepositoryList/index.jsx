@@ -21,7 +21,10 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories, loading, error } = useRepositories();
+  const { repositories, loading, error } = useRepositories({
+    order: "RATING_AVERAGE",
+    direction: "ASC",
+  });
   if (loading) {
     return <ActivityIndicator />;
   }
