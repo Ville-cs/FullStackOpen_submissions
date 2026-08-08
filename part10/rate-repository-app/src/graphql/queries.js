@@ -34,6 +34,7 @@ export const ME = gql`
             createdAt
             id
             repository {
+              id
               ownerName
               name
             }
