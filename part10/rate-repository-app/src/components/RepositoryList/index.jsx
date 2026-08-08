@@ -55,7 +55,7 @@ const RepositoryList = () => {
   }
   return (
     <View>
-      <View>
+      <View style={styles.sort}>
         <Picker
           selectedValue={selectedSort}
           onValueChange={handleSortChange}
@@ -74,6 +74,11 @@ const RepositoryList = () => {
 const styles = StyleSheet.create({
   separator: {
     height: 30,
+  },
+  sort: {
+    marginTop: 0,
+    marginBottom: 20,
+    backgroundColor: "#f2ebebde",
   },
 });
 
