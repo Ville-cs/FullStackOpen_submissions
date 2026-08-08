@@ -2,6 +2,8 @@ import useRepositories from "../../hooks/useRepositories";
 import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import Text from "../Text";
+import { Picker } from "@react-native-picker/picker";
+import { useState } from "react";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -21,10 +23,27 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories, loading, error } = useRepositories({
-    order: "RATING_AVERAGE",
-    direction: "ASC",
-  });
+  const [options, setOptions] = useState({});
+  const [selectedSort, setSelectedSort] = useState("latest");
+  const sortOptions = {
+    latest: {
+      orderBy: "CREATED_AT",
+      orderDirection: "DESC",
+    },
+    highest: {
+      orderBy: "RATING_AVERAGE",
+      orderDirection: "DESC",
+    },
+    lowest: {
+      orderBy: "RATING_AVERAGE",
+      orderDirection: "ASC",
+    },
+  };
+  const handleSortChange = (value) => {
+    setSelectedSort(value);
+    setOptions(sortOptions[value]);
+  };
+  const { repositories, loading, error } = useRepositories(options);
   if (loading) {
     return <ActivityIndicator />;
   }
@@ -34,7 +53,22 @@ const RepositoryList = () => {
   if (!repositories) {
     return <Text>No repositories found</Text>;
   }
-  return <RepositoryListContainer repositories={repositories} />;
+  return (
+    <View>
+      <View>
+        <Picker
+          selectedValue={selectedSort}
+          onValueChange={handleSortChange}
+          prompt="Sort repositories by:"
+        >
+          <Picker.Item label="Latest repositories" value="latest" />
+          <Picker.Item label="Highest rated repositories" value="highest" />
+          <Picker.Item label="Lowest rated repositories" value="lowest" />
+        </Picker>
+      </View>
+      <RepositoryListContainer repositories={repositories} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
