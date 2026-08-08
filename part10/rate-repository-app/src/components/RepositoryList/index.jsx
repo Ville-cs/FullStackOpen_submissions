@@ -4,6 +4,8 @@ import RepositoryItem from "./RepositoryItem";
 import Text from "../Text";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import { Searchbar } from "react-native-paper";
+import { useDebounce } from "use-debounce";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -25,6 +27,8 @@ export const RepositoryListContainer = ({ repositories }) => {
 const RepositoryList = () => {
   const [options, setOptions] = useState({});
   const [selectedSort, setSelectedSort] = useState("latest");
+  const [searchKeyword, setSearchKeyword] = useState({});
+  const [delayedSearchKeyword] = useDebounce(searchKeyword, 750);
   const sortOptions = {
     latest: {
       orderBy: "CREATED_AT",
@@ -43,7 +47,10 @@ const RepositoryList = () => {
     setSelectedSort(value);
     setOptions(sortOptions[value]);
   };
-  const { repositories, loading, error } = useRepositories(options);
+  const { repositories, loading, error } = useRepositories({
+    ...options,
+    searchKeyword: delayedSearchKeyword,
+  });
   if (loading) {
     return <ActivityIndicator />;
   }
@@ -55,6 +62,12 @@ const RepositoryList = () => {
   }
   return (
     <View>
+      <Searchbar
+        style={styles.search}
+        placeholder="Filter repositories"
+        onChangeText={setSearchKeyword}
+        value={searchKeyword}
+      />
       <View style={styles.sort}>
         <Picker
           selectedValue={selectedSort}
@@ -79,6 +92,11 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 20,
     backgroundColor: "#f2ebebde",
+    borderRadius: 25,
+    paddingLeft: 15,
+  },
+  search: {
+    marginBottom: 10,
   },
 });
 
