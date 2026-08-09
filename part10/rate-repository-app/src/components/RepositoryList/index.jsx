@@ -61,7 +61,7 @@ const RepositoryList = () => {
     return <Text>No repositories found</Text>;
   }
   return (
-    <View>
+    <View style={styles.container}>
       <Searchbar
         style={styles.search}
         placeholder="Filter repositories"
@@ -87,6 +87,9 @@ const RepositoryList = () => {
 const styles = StyleSheet.create({
   separator: {
     height: 30,
+  },
+  container: {
+    flex: 1,
   },
   sort: {
     marginTop: 0,
