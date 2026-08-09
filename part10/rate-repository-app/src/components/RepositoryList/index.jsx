@@ -9,7 +9,11 @@ import { useDebounce } from "use-debounce";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({
+  repositories,
+  onEndReached,
+  loading,
+}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -20,6 +24,9 @@ export const RepositoryListContainer = ({ repositories }) => {
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem item={item} />}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={loading ? <ActivityIndicator /> : null}
     />
   );
 };
@@ -47,11 +54,12 @@ const RepositoryList = () => {
     setSelectedSort(value);
     setOptions(sortOptions[value]);
   };
-  const { repositories, loading, error } = useRepositories({
+  const { repositories, loading, error, fetchMore } = useRepositories({
     ...options,
     searchKeyword: delayedSearchKeyword,
+    first: 5,
   });
-  if (loading) {
+  if (loading && !repositories) {
     return <ActivityIndicator />;
   }
   if (error) {
@@ -79,7 +87,11 @@ const RepositoryList = () => {
           <Picker.Item label="Lowest rated repositories" value="lowest" />
         </Picker>
       </View>
-      <RepositoryListContainer repositories={repositories} />
+      <RepositoryListContainer
+        repositories={repositories}
+        onEndReached={fetchMore}
+        loading={loading}
+      />
     </View>
   );
 };
