@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { REPOSITORY_INFO, USER_DETAILS } from "./fragments";
+import { REPOSITORY_INFO, USER_DETAILS, PAGE_INFO } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query Repositories(
@@ -24,12 +24,11 @@ export const GET_REPOSITORIES = gql`
         cursor
       }
       pageInfo {
-        endCursor
-        startCursor
-        hasNextPage
+        ...PageInfo
       }
     }
   }
+  ${PAGE_INFO}
   ${REPOSITORY_INFO}
 `;
 
@@ -58,10 +57,11 @@ export const ME = gql`
 `;
 
 export const GET_REPOSITORY = gql`
-  query Repository($repositoryId: ID!) {
+  query Repository($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       ...RepositoryInfo
-      reviews {
+      reviews(first: $first, after: $after) {
+        totalCount
         edges {
           node {
             id
@@ -72,12 +72,17 @@ export const GET_REPOSITORY = gql`
               ...UserDetails
             }
           }
+          cursor
+        }
+        pageInfo {
+          ...PageInfo
         }
       }
     }
   }
   ${REPOSITORY_INFO}
   ${USER_DETAILS}
+  ${PAGE_INFO}
 `;
 
 export const GET_REVIEWS = gql`
