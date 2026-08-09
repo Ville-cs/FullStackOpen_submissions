@@ -22,3 +22,11 @@ export const USER_DETAILS = gql`
     username
   }
 `;
+
+export const PAGE_INFO = gql`
+  fragment PageInfo on PageInfo {
+    endCursor
+    startCursor
+    hasNextPage
+  }
+`;
