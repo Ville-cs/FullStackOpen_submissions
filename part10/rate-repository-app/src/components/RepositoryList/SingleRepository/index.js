@@ -7,9 +7,11 @@ import useRepository from "../../../hooks/useRepository";
 
 const SingleRepository = () => {
   const { id } = useParams();
-  const { repository, loading, error } = useRepository(id);
-
-  if (loading) {
+  const { repository, loading, error, fetchMore } = useRepository({
+    repositoryId: id,
+    first: 3,
+  });
+  if (loading && !repository) {
     return <ActivityIndicator />;
   }
   if (error) {
@@ -29,6 +31,9 @@ const SingleRepository = () => {
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => <RepositoryView repository={repository} />}
+      onEndReached={fetchMore}
+      onEndReachedThreshold={0.5}
+      ListFooterComponent={loading ? <ActivityIndicator /> : null}
     />
   );
 };
