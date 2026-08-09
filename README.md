@@ -64,6 +64,9 @@ https://fullstackopen.com/en/
 * Mobile app development
 * Setting up mobile development environment
 * Platform specific code
+* Using native components through React Native
+* Navigation on a mobile app
+* Expo and its various tools
 
 ### Part 11: CI/CD
 * GitHub workflows
