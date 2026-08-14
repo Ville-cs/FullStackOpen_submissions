@@ -56,9 +56,10 @@ https://fullstackopen.com/en/
 * Websocket and subscriptions
 
 ### Part 9: TypeScript
-* typing JavaScript
-* type assertion and type narrowing
-* validating requests to the server
+* Typing JavaScript
+* Type assertions and type narrowing
+* Validating and parsing requests to the server
+* Typing React and other 3rd party packages
 
 ### Part 10: React Native
 * Mobile app development
