@@ -12,9 +12,9 @@ const AddEntries = ({
         name: newName,
         number: newNumber
       }
-    if (persons.find(person => nameObject.number === person.number)) {
-      if (window.confirm(`${newNumber} already added: continue`)) {
-        const oldPerson = persons.find(person => nameObject.number === person.number)
+    if (persons.find(person => nameObject.name === person.name)) {
+      if (window.confirm(`${newName} already added: continue`)) {
+        const oldPerson = persons.find(person => nameObject.name === person.name)
         noteService
           .update(oldPerson.id, nameObject)
           .then(returnedPerson => {

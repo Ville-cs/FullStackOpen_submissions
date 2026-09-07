@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import SearchFilter from './components/SearchFilter'
-import ShowEntries from './components/ShowEntries'
-import AddEntries from './components/AddEntries'
-import noteService from './services/noteService'
-import SuccessfulAdd from './components/SuccessfulAdd'
-import ErrorMessage from './components/ErrorMessage'
+import { useState, useEffect } from "react"
+import SearchFilter from "./components/SearchFilter"
+import ShowEntries from "./components/ShowEntries"
+import AddEntries from "./components/AddEntries"
+import noteService from "./services/noteService"
+import SuccessfulAdd from "./components/SuccessfulAdd"
+import ErrorMessage from "./components/ErrorMessage"
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -15,12 +15,10 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
-    noteService
-      .getAll()
-      .then(initialPersons => {
-        setPersons(initialPersons)
+    noteService.getAll().then((initialPersons) => {
+      setPersons(initialPersons)
     })
-    }, [])
+  }, [])
 
   const handleName = (event) => {
     setNewName(event.target.value)
@@ -35,13 +33,10 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div style={{ maxWidth: "50em", margin: "5em auto" }}>
       <h2>Phonebook</h2>
-      <div style={{margin: "10px 5px"}}>
-        <SuccessfulAdd
-          addMessage={addMessage}
-          setAddMessage={setAddMessage}
-        />
+      <div style={{ margin: "10px 5px" }}>
+        <SuccessfulAdd addMessage={addMessage} setAddMessage={setAddMessage} />
         <ErrorMessage
           errorMessage={errorMessage}
           setErrorMessage={setErrorMessage}
@@ -52,7 +47,8 @@ const App = () => {
           newSearch={newSearch}
           setNewSearch={setNewSearch}
           handleSearch={handleSearch}
-          persons={persons} />
+          persons={persons}
+        />
       </div>
       <h2>Add new contact</h2>
       <AddEntries
