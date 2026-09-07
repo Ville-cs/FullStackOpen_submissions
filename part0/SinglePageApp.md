@@ -1,4 +1,4 @@
-0.5 new note diagram
+0.5 Single page app diagram
 
 ```mermaid
 sequenceDiagram
@@ -7,7 +7,7 @@ sequenceDiagram
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
-    server->>browser: Return HTML
+    server->>browser: Returns the requested HTML file at that address
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
@@ -20,8 +20,11 @@ sequenceDiagram
     server->>browser: Return JavaScript file
     deactivate server
 
+    Note right of browser: The browser starts executing the spa.js, which does a GET request likely to a rest endpoint of the server.
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server->>browser: Return json file
+    server->>browser: Status 200: returns JSON file
+    Note right of browser: The browser updates the DOM with the returned JSON file.
 
 ```
