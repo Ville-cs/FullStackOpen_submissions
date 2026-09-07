@@ -1,28 +1,26 @@
-import { useNavigate } from 'react-router-dom'
-import { useField } from '../hooks'
+import { useNavigate } from "react-router-dom"
+import { useField } from "../hooks"
+import { useAnecdoteContext } from "../hooks/useAnecdoteContext"
 
-const CreateNew = props => {
-  const { onReset: resetContent, ...content } = useField('text')
-  const { onReset: resetAuthor, ...author } = useField('text')
-  const { onReset: resetInfo, ...info } = useField('text')
+const CreateNew = () => {
+  const { addAnecdote } = useAnecdoteContext()
+  const { onReset: resetContent, ...content } = useField("text", "content")
+  const { onReset: resetAuthor, ...author } = useField("text", "author")
+  const { onReset: resetInfo, ...info } = useField("text", "info")
   const navigate = useNavigate()
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    props.addNew({
+    addAnecdote({
       content: content.value,
       author: author.value,
       info: info.value,
       votes: 0,
     })
-    navigate('/')
-    props.setNotification(`A new anecdote ${content.value} created!`)
-    setTimeout(() => {
-      props.setNotification('')
-    }, 5000)
+    navigate("/")
   }
 
-  const resetForm = e => {
+  const resetForm = (e) => {
     e.preventDefault()
     resetContent()
     resetAuthor()
@@ -45,7 +43,7 @@ const CreateNew = props => {
           url for more info
           <input {...info} />
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
         <button onClick={resetForm}>reset</button>
       </form>
     </div>

@@ -1,16 +1,24 @@
-import { Link } from 'react-router-dom'
+import { useAnecdoteContext } from "../hooks/useAnecdoteContext"
 
-const AnecdoteList = ({ anecdotes }) => (
-  <div>
-    <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => (
-        <li key={anecdote.id}>
-          <Link to={`/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>
-      ))}
-    </ul>
-  </div>
-)
+const AnecdoteList = () => {
+  const { anecdotes, deleteAnecdote } = useAnecdoteContext()
 
+  return (
+    <div>
+      <h2>Anecdotes</h2>
+      <ul>
+        {anecdotes.map((anecdote) => (
+          <div key={anecdote.id}>
+            <li>
+              {anecdote.content}
+              <button onClick={() => deleteAnecdote(anecdote.id)}>
+                delete
+              </button>
+            </li>
+          </div>
+        ))}
+      </ul>
+    </div>
+  )
+}
 export default AnecdoteList
