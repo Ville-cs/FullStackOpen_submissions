@@ -1,72 +1,81 @@
-import { useState } from 'react'
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { TextField, Button, Typography } from "@mui/material"
 
 const BlogForm = ({ handleBlogPost }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const [title, setTitle] = useState("")
+  const [author, setAuthor] = useState("")
+  const [url, setUrl] = useState("")
+  const navigate = useNavigate()
 
-  const handleTitleChange = event => {
+  const handleTitleChange = (event) => {
     setTitle(event.target.value)
   }
 
-  const handleAuthorChange = event => {
+  const handleAuthorChange = (event) => {
     setAuthor(event.target.value)
   }
 
-  const handleUrlChange = event => {
+  const handleUrlChange = (event) => {
     setUrl(event.target.value)
   }
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     handleBlogPost({
       title: title,
       author: author,
       url: url,
     })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    setTitle("")
+    setAuthor("")
+    setUrl("")
+    navigate("/")
+  }
+
+  const styles = {
+    textFieldMargin: {
+      marginBottom: 25,
+    },
   }
 
   return (
     <form id="testForm" onSubmit={handleSubmit}>
-      <div>
-        title:
-        <input
-          type="text"
+      <Typography variant="h4" sx={{ margin: "1em 0em" }}>
+        create new
+      </Typography>
+      <div style={styles.textFieldMargin}>
+        <TextField
+          label="title"
           value={title}
-          name="title"
           onChange={handleTitleChange}
-          placeholder="title of the blog"
-          id="title"
+          variant="standard"
         />
       </div>
-      <div>
-        author:
-        <input
-          type="text"
+      <div style={styles.textFieldMargin}>
+        <TextField
+          label="author"
           value={author}
-          name="author"
           onChange={handleAuthorChange}
-          placeholder="author of the blog"
-          id="author"
+          variant="standard"
         />
       </div>
-      <div>
-        url:
-        <input
-          type="text"
+      <div style={styles.textFieldMargin}>
+        <TextField
+          label="url"
           value={url}
-          name="url"
           onChange={handleUrlChange}
-          placeholder="URL of the blog"
-          id="url"
+          variant="standard"
         />
       </div>
-      <button className="postBlog" type="submit">
+      <Button
+        type="submit"
+        variant="contained"
+        color="success"
+        sx={{ margin: "1em 2em" }}
+      >
         Post
-      </button>
+      </Button>
     </form>
   )
 }

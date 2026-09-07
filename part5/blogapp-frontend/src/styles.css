@@ -56,7 +56,13 @@
   color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family: Inter, -apple-system, system-ui, Roboto, 'Helvetica Neue', Arial,
+  font-family:
+    Inter,
+    -apple-system,
+    system-ui,
+    Roboto,
+    "Helvetica Neue",
+    Arial,
     sans-serif;
 }
 
@@ -70,8 +76,9 @@
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-family:
+    -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 .blogStyle {
